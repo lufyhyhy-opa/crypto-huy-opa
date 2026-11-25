@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.env
+data/*.parquet
+data/*.csv
+logs/
+state/
+research/reports/*.json
+hermes-skills-hub/

@@ -1,0 +1,22 @@
+exchange: bybit              # ccxt exchange id: bybit, binance, okx
+default_type: swap           # perpetual futures (supports long & short)
+testnet: true                # true = exchange sandbox/testnet
+paper: true                  # true = local paper simulation, zero orders sent
+paper_equity: 10000.0        # starting USDT equity in paper mode
+
+risk:
+  max_gross_leverage: 1.0    # sum(|weights|) <= 1.0x account equity
+  max_daily_loss: 0.03       # -3% intraday drawdown -> flatten all & halt
+  min_order_usd: 10.0        # skip tiny rebalance trades
+  max_stale_candles: 3       # halt/skip if data older than 3 * timeframe
+
+backtest:
+  fee_rate: 0.0006           # 0.06% taker fee per side
+  slippage_rate: 0.0002      # 0.02% slippage per side
+  use_funding: true          # include historical perpetual funding payments
+  train_ratio: 0.60          # 60% in-sample / 40% out-of-sample split
+
+paths:
+  data_dir: data
+  state_dir: state
+  log_dir: logs

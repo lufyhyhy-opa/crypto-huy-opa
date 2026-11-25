@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Huy-OPA — Master Plan Hệ Thống Giao Dịch Định Lượng</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #0f766e;
+      --accent-soft: #f0fdfa;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.68;
+      font-size: 15.5px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 28px 20px;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 13.5px;
+    }
+    .sidebar-title {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .sidebar ul ul {
+      padding-left: 14px;
+      margin-top: 4px;
+    }
+    .sidebar li {
+      margin: 6px 0;
+    }
+    .sidebar a {
+      color: var(--muted);
+      text-decoration: none;
+      display: block;
+      padding: 2px 0;
+    }
+    .sidebar a:hover {
+      color: var(--accent);
+    }
+    .content {
+      padding: 40px 56px 80px;
+      max-width: 920px;
+    }
+    h1 {
+      font-size: 2rem;
+      line-height: 1.25;
+      margin: 0 0 18px;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 14px;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 42px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      color: #0f172a;
+    }
+    h3 {
+      font-size: 1.12rem;
+      margin: 26px 0 10px;
+      color: var(--accent);
+    }
+    p { margin: 0 0 14px; }
+    ul, ol { margin: 0 0 16px; padding-left: 22px; }
+    li { margin: 5px 0; }
+    blockquote {
+      margin: 18px 0;
+      padding: 14px 18px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      color: #134e4a;
+    }
+    blockquote p:last-child { margin-bottom: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0 24px;
+      font-size: 13.8px;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 9px 11px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--surface);
+      font-weight: 600;
+      color: #0f172a;
+    }
+    tr:nth-child(even) td {
+      background: #fcfdff;
+    }
+    code {
+      font-family: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .code-wrap {
+      position: relative;
+      margin: 16px 0 22px;
+      page-break-inside: avoid;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 16px 18px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 12.8px;
+      line-height: 1.55;
+      margin: 0;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: rgba(255,255,255,0.12);
+      color: #e2e8f0;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11.5px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.22);
+    }
+    .math-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 14px 0 18px;
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 30px 0;
+    }
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .content { padding: 24px 20px 60px; }
+    }
+    @media print {
+      body { font-size: 11pt; line-height: 1.5; }
+      .layout { display: block; max-width: 100%; }
+      .sidebar, .copy-btn { display: none !important; }
+      .content { padding: 0; max-width: 100%; }
+      h1 { font-size: 20pt; }
+      h2 { font-size: 15pt; page-break-after: avoid; margin-top: 24pt; }
+      h3 { font-size: 12pt; page-break-after: avoid; }
+      pre {
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-size: 8.8pt;
+      }
+      table { font-size: 9pt; }
+      blockquote { page-break-inside: avoid; }
+      @page {
+        size: A4;
+        margin: 16mm 15mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Mục Lục Tài Liệu</div>
+      <div class="toc">
+<ul>
+<li><a href="#muc-luc-chi-tiet">Mục Lục Chi Tiết</a></li>
+<li><a href="#chuong-0-ban-o-tong-the-tu-duy-xay-bot-cua-quy-quant">Chương 0: Bản đồ tổng thể &amp; Tư duy xây Bot của Quỹ Quant</a><ul>
+<li><a href="#01-ban-can-gi-e-lam-theo-tai-lieu-nay">0.1. Bạn cần gì để làm theo tài liệu này?</a></li>
+<li><a href="#02-tai-sao-90-bot-tu-viet-bang-ai-bi-loi-ngay-em-au-tien">0.2. Tại sao 90% Bot tự viết bằng AI bị lỗi ngay đêm đầu tiên?</a></li>
+<li><a href="#03-vong-lap-7-buoc-an-toan-cua-bot">0.3. Vòng lặp 7 bước an toàn của Bot</a></li>
+</ul>
+</li>
+<li><a href="#chuong-1-cai-at-moi-truong-khoi-tao-du-an-buoc-11-14">Chương 1: Cài đặt môi trường &amp; Khởi tạo dự án (Bước 1.1 → 1.4)</a><ul>
+<li><a href="#buoc-11-kiem-tra-python-311">Bước 1.1: Kiểm tra Python 3.11+</a></li>
+<li><a href="#buoc-12-tao-cay-thu-muc-du-an-chuan">Bước 1.2: Tạo cây thư mục dự án chuẩn</a></li>
+<li><a href="#buoc-13-tao-moi-truong-ao-cai-at-9-thu-vien-loi">Bước 1.3: Tạo môi trường ảo &amp; Cài đặt 9 thư viện lõi</a></li>
+<li><a href="#buoc-14-tao-3-file-cau-hinh-goc">Bước 1.4: Tạo 3 file cấu hình gốc</a></li>
+</ul>
+</li>
+<li><a href="#chuong-2-xay-bo-tai-du-lieu-lich-su-mien-phi-ohlcv-funding-rate-buoc-21-22">Chương 2: Xây bộ tải dữ liệu lịch sử miễn phí — OHLCV &amp; Funding Rate (Bước 2.1 → 2.2)</a><ul>
+<li><a href="#buoc-21-tao-file-coredata_loaderpy">Bước 2.1: Tạo file core/data_loader.py</a></li>
+<li><a href="#buoc-22-checkpoint-kiem-tra-tai-du-lieu-that">Bước 2.2: Checkpoint kiểm tra tải dữ liệu thật</a></li>
+</ul>
+</li>
+<li><a href="#chuong-3-xay-bo-quan-tri-rui-ro-may-backtest-bai-test-chong-nhin-trom-tuong-lai-buoc-31-34">Chương 3: Xây Bộ Quản trị Rủi ro, Máy Backtest &amp; Bài Test Chống Nhìn Trộm Tương Lai (Bước 3.1 → 3.4)</a><ul>
+<li><a href="#buoc-31-tao-file-coreriskpy-5-gioi-han-cung">Bước 3.1: Tạo file core/risk.py (5 giới hạn cứng)</a></li>
+<li><a href="#buoc-32-tao-file-coremetricspy-bo-cham-iem-hieu-suat-chuan-quy">Bước 3.2: Tạo file core/metrics.py (Bộ chấm điểm hiệu suất chuẩn Quỹ)</a></li>
+<li><a href="#buoc-33-tao-file-corebacktesterpy-may-backtest-nhan-qua-tung-nen">Bước 3.3: Tạo file core/backtester.py (Máy Backtest Nhân quả từng nến)</a></li>
+<li><a href="#buoc-34-tao-bai-test-tu-ong-bat-loi-look-ahead-teststest_no_lookaheadpy">Bước 3.4: Tạo bài test tự động bắt lỗi Look-Ahead (tests/test_no_lookahead.py)</a></li>
+</ul>
+</li>
+<li><a href="#chuong-4-cai-at-tron-bo-5-chien-luoc-cot-loi-bo-ghep-alpha-combo-buoc-41-46">Chương 4: Cài đặt trọn bộ 5 Chiến lược Cốt lõi + Bộ Ghép Alpha Combo (Bước 4.1 → 4.6)</a><ul>
+<li><a href="#buoc-41-chien-luoc-1-hodrickprescott-filter-strategieshp_filterpy-muc-81">Bước 4.1: Chiến lược 1 — Hodrick–Prescott Filter (strategies/hp_filter.py — Mục 8.1)</a></li>
+<li><a href="#buoc-42-chien-luoc-2-k-nearest-neighbors-strategiesknnpy-muc-317">Bước 4.2: Chiến lược 2 — k-Nearest Neighbors (strategies/knn.py — Mục 3.17)</a></li>
+<li><a href="#buoc-43-chien-luoc-3-mang-neural-ann-15-phut-strategiesannpy-muc-182">Bước 4.3: Chiến lược 3 — Mạng Neural ANN 15 phút (strategies/ann.py — Mục 18.2)</a></li>
+<li><a href="#buoc-44-chien-luoc-4-statistical-arbitrage-10-coin-strategiesstatarbpy-muc-318">Bước 4.4: Chiến lược 4 — Statistical Arbitrage 10 Coin (strategies/statarb.py — Mục 3.18)</a></li>
+<li><a href="#buoc-45-chien-luoc-5-cam-xuc-x-bernoulli-naive-bayes-strategiessentiment_nbpy-muc-183">Bước 4.5: Chiến lược 5 — Cảm xúc X / Bernoulli Naïve Bayes (strategies/sentiment_nb.py — Mục 18.3)</a></li>
+<li><a href="#buoc-46-bo-ghep-alpha-combo-11-buoc-strategiesalpha_combopy-muc-320">Bước 4.6: Bộ ghép Alpha Combo 11 bước (strategies/alpha_combo.py — Mục 3.20)</a></li>
+</ul>
+</li>
+<li><a href="#chuong-5-chay-backtest-au-tien-oc-chi-so-case-study-thuc-te-buoc-51-53">Chương 5: Chạy Backtest Đầu Tiên, Đọc Chỉ Số &amp; Case Study Thực Tế (Bước 5.1 → 5.3)</a><ul>
+<li><a href="#buoc-51-tao-script-chay-backtest-mau-researchrun_demopy">Bước 5.1: Tạo script chạy Backtest mẫu (research/run_demo.py)</a></li>
+<li><a href="#buoc-52-cach-oc-6-chi-so-cot-loi">Bước 5.2: Cách đọc 6 chỉ số cốt lõi</a></li>
+<li><a href="#buoc-53-case-study-thuc-te-chay-tren-du-lieu-that-bybit-20212026">Bước 5.3: Case Study Thực Tế (Chạy trên dữ liệu thật Bybit 2021–2026)</a></li>
+</ul>
+</li>
+<li><a href="#chuong-6-bo-loc-6-cong-6-gates-prompt-giam-oc-quan-tri-rui-ro">Chương 6: Bộ Lọc 6 Cổng (6 Gates) &amp; Prompt Giám Đốc Quản Trị Rủi Ro</a><ul>
+<li><a href="#prompt-giam-oc-quan-tri-rui-ro-copy-paste-gui-ai-sau-moi-lan-backtest">Prompt "Giám Đốc Quản Trị Rủi Ro" (Copy-paste gửi AI sau mỗi lần backtest)</a></li>
+</ul>
+</li>
+<li><a href="#chuong-7-chay-bot-247-paper-testnet-vps-xu-ly-loi-thuong-gap-buoc-71-75">Chương 7: Chạy Bot 24/7 (Paper -&gt; Testnet -&gt; VPS) &amp; Xử Lý Lỗi Thường Gặp (Bước 7.1 → 7.5)</a><ul>
+<li><a href="#buoc-71-tao-khung-bot-hoan-chinh-corebotpy">Bước 7.1: Tạo khung Bot hoàn chỉnh (core/bot.py)</a></li>
+<li><a href="#buoc-72-chay-thu-paper-trading-1-vong">Bước 7.2: Chạy thử Paper Trading 1 vòng</a></li>
+<li><a href="#buoc-73-tao-api-key-testnet-an-toan">Bước 7.3: Tạo API Key Testnet an toàn</a></li>
+<li><a href="#buoc-74-treo-bot-247-tren-vps-linux-bang-systemd">Bước 7.4: Treo Bot 24/7 trên VPS Linux bằng systemd</a></li>
+<li><a href="#buoc-75-bang-xu-ly-6-loi-thuong-gap-nhat">Bước 7.5: Bảng xử lý 6 lỗi thường gặp nhất</a></li>
+</ul>
+</li>
+<li><a href="#phu-luc-kho-26-chien-luoc-mo-rong-tu-sach-ang-test-tiep-tren-crypto">Phụ lục: Kho 26 Chiến lược Mở rộng từ Sách đáng Test tiếp trên Crypto</a><ul>
+<li><a href="#kho-github-tong-hop-truc-tiep-tu-sach-151-trading-strategies">Kho GitHub tổng hợp trực tiếp từ sách 151 Trading Strategies</a></li>
+<li><a href="#nhom-1-arbitrage-basis-chenh-lech-gia-lai-suat">Nhóm 1: Arbitrage &amp; Basis (Chênh lệch giá &amp; Lãi suất)</a></li>
+<li><a href="#nhom-2-trend-momentum-xu-huong-ong-luong">Nhóm 2: Trend &amp; Momentum (Xu hướng &amp; Động lượng)</a></li>
+<li><a href="#nhom-3-mean-reversion-ao-chieu-ve-trung-binh">Nhóm 3: Mean Reversion (Đảo chiều về trung bình)</a></li>
+<li><a href="#nhom-4-volatility-options-bien-ong-quyen-chon">Nhóm 4: Volatility &amp; Options (Biến động &amp; Quyền chọn)</a></li>
+<li><a href="#nhom-5-positioning-tin-tuc-thuc-thi">Nhóm 5: Positioning, Tin tức &amp; Thực thi</a></li>
+</ul>
+</li>
+<li><a href="#luu-y-khi-dung-github-ma-nguon-mo-luon-kiem-tra-lai-code-cua-cac-repo-cong-ong-qua-gate-1-look-ahead-va-gate-2-phi-funding-o-chuong-6-truoc-khi-ua-vao-chay-papertestnet">&gt; Lưu ý khi dùng GitHub mã nguồn mở: Luôn kiểm tra lại code của các repo cộng đồng qua Gate 1 (Look-ahead) và Gate 2 (Phí + Funding) ở Chương 6 trước khi đưa vào chạy Paper/Testnet.</a></li>
+</ul>
+</div>
+
+    </aside>
+    <main class="content">
+      <h1 id="crypto-huy-opa-master-plan-xay-dung-he-thong-giao-dich-inh-luong-tu-151-trading-strategies">CRYPTO HUY-OPA — MASTER PLAN: Xây Dựng Hệ Thống Giao Dịch Định Lượng Từ "151 Trading Strategies"</h1>
+<blockquote>
+<p><strong>Biên soạn &amp; Hệ thống hóa bởi Tran Quang Huy (Huy OPA) — Tài liệu nghiên cứu định lượng mã nguồn mở</strong></p>
+<p><strong>Nguồn học thuật gốc:</strong> <em>151 Trading Strategies</em> — <strong>Zura Kakushadze</strong> (PhD Vật lý lý thuyết Cornell năm 23 tuổi, cựu Managing Director tại WorldQuant) &amp; <strong>Juan Andrés Serur</strong>.
+- Bản arXiv (đầy đủ 20 chương, 398 trang, miễn phí): <code>https://arxiv.org/abs/1912.04492</code> (bản web HTML: <code>https://arxiv.org/html/1912.04492v1</code>)
+- Bản SSRN (tiếng Anh 2018, ~480 trang): <code>https://papers.ssrn.com/abstract=3247865</code></p>
+<p><strong>Cảnh báo rủi ro (Bắt buộc đọc):</strong> Tài liệu này chỉ phục vụ mục đích nghiên cứu, học thuật và thực hành kỹ thuật — <strong>không phải lời khuyên đầu tư</strong>. Giao dịch hợp đồng tương lai có đòn bẩy có thể làm mất toàn bộ vốn. Toàn bộ hệ thống dưới đây mặc định khóa an toàn ở chế độ <strong>Paper Trading (<code>paper: true</code>)</strong> và <strong>Testnet (<code>testnet: true</code>)</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="muc-luc-chi-tiet">Mục Lục Chi Tiết</h2>
+<ul>
+<li><a href="#chương-0-bản-đồ-tổng-thể--tư-duy-xây-bot-của-quỹ-quant">Chương 0: Bản đồ tổng thể &amp; Tư duy xây Bot của Quỹ Quant</a></li>
+<li><a href="#chương-1-cài-đặt-môi-trường--khởi-tạo-dự-án-bước-11--14">Chương 1: Cài đặt môi trường &amp; Khởi tạo dự án (Bước 1.1 → 1.4)</a></li>
+<li><a href="#chương-2-xây-bộ-tải-dữ-liệu-lịch-sử-miễn-phí--ohlcv--funding-rate-bước-21--22">Chương 2: Xây bộ tải dữ liệu lịch sử miễn phí — OHLCV &amp; Funding Rate (Bước 2.1 → 2.2)</a></li>
+<li><a href="#chương-3-xây-bộ-quản-trị-rủi-ro-máy-backtest--bài-test-chống-nhìn-trộm-tương-lai-bước-31--34">Chương 3: Xây Bộ Quản trị Rủi ro, Máy Backtest &amp; Bài Test Chống Nhìn Trộm Tương Lai (Bước 3.1 → 3.4)</a></li>
+<li><a href="#chương-4-cài-đặt-trọn-bộ-5-chiến-lược-cốt-lõi--bộ-ghép-alpha-combo-bước-41--46">Chương 4: Cài đặt trọn bộ 5 Chiến lược Cốt lõi + Bộ Ghép Alpha Combo (Bước 4.1 → 4.6)</a></li>
+<li><a href="#chương-5-chạy-backtest-đầu-tiên-đọc-chỉ-số--case-study-thực-tế-bước-51--53">Chương 5: Chạy Backtest Đầu Tiên, Đọc Chỉ Số &amp; Case Study Thực Tế (Bước 5.1 → 5.3)</a></li>
+<li><a href="#chương-6-bộ-lọc-6-cổng-6-gates--prompt-giám-đốc-quản-trị-rủi-ro">Chương 6: Bộ Lọc 6 Cổng (6 Gates) &amp; Prompt Giám Đốc Quản Trị Rủi Ro</a></li>
+<li><a href="#chương-7-chạy-bot-247-paper---testnet---vps--xử-lý-lỗi-thường-gặp-bước-71--75">Chương 7: Chạy Bot 24/7 (Paper -&gt; Testnet -&gt; VPS) &amp; Xử Lý Lỗi Thường Gặp (Bước 7.1 → 7.5)</a></li>
+<li><a href="#phụ-lục-kho-26-chiến-lược-mở-rộng-từ-sách-đáng-test-tiếp-trên-crypto">Phụ lục: Kho 26 Chiến lược Mở rộng từ Sách đáng Test tiếp trên Crypto</a></li>
+</ul>
+<hr />
+<h2 id="chuong-0-ban-o-tong-the-tu-duy-xay-bot-cua-quy-quant">Chương 0: Bản đồ tổng thể &amp; Tư duy xây Bot của Quỹ Quant</h2>
+<h3 id="01-ban-can-gi-e-lam-theo-tai-lieu-nay">0.1. Bạn cần gì để làm theo tài liệu này?</h3>
+<ul>
+<li><strong>Máy tính:</strong> macOS, Windows hoặc Linux (RAM từ 8GB trở lên).</li>
+<li><strong>Vốn ban đầu:</strong> <strong>0 đồng.</strong> Không cần nạp tiền sàn, không cần tạo API Key để tải dữ liệu lịch sử 5 năm và chạy toàn bộ backtest.</li>
+<li><strong>Thời gian dự kiến:</strong> 1–2 buổi tối để chạy xong hệ thống hoàn chỉnh; 1 tuần để làm chủ việc backtest &amp; đánh giá chiến lược mới.</li>
+</ul>
+<h3 id="02-tai-sao-90-bot-tu-viet-bang-ai-bi-loi-ngay-em-au-tien">0.2. Tại sao 90% Bot tự viết bằng AI bị lỗi ngay đêm đầu tiên?</h3>
+<p>Vì người mới thường ra lệnh cho AI: <em>"Hãy viết một con bot trade BTC bằng Python"</em>. AI sẽ sinh ra một tệp mã nguồn đơn khối (monolithic) trộn lẫn công thức, kết nối sàn và đặt lệnh. Khi đổi ý tưởng, bạn phải đập đi viết lại từ đầu — và rất dễ dính bug đặt lệnh sai dẫn đến tổn thất nghiêm trọng nguồn vốn.</p>
+<p><strong>Kiến trúc chuẩn của Quỹ Quant</strong> tách hệ thống thành <strong>4 lớp độc lập</strong>:
+1. <strong>Lớp Dữ liệu (<code>core/data_loader.py</code>):</strong> Tải nến OHLCV + Funding Rate, luôn <strong>cắt bỏ nến cuối chưa đóng</strong>, lưu cache <code>.parquet</code>.
+2. <strong>Lớp Chiến lược (<code>strategies/*.py</code>):</strong> Chỉ làm đúng 1 việc: nhận dữ liệu quá khứ -&gt; trả về từ điển trọng số mục tiêu từ <code>-1.0</code> (Short 100%) đến <code>+1.0</code> (Long 100%).
+3. <strong>Lớp Kiểm định (<code>core/backtester.py</code>, <code>core/metrics.py</code>, <code>tests/</code>):</strong> Giả lập từng nến, trừ đủ phí + trượt giá + funding, chia 60% In-Sample / 40% Out-of-Sample, chạy bài test tự động bắt lỗi nhìn trộm tương lai.
+4. <strong>Lớp Thực thi &amp; Rủi ro (<code>core/risk.py</code>, <code>core/bot.py</code>):</strong> Chạy 24/7, kiểm tra 5 giới hạn cứng trước khi hỏi chiến lược, lưu trạng thái xuống ổ cứng để restart không mất dữ liệu.</p>
+<h3 id="03-vong-lap-7-buoc-an-toan-cua-bot">0.3. Vòng lặp 7 bước an toàn của Bot</h3>
+<pre><code class="language-text">[1. Tải nến OHLCV &amp; BỎ nến cuối chưa đóng]
+          │
+          ▼
+[2. Kiểm tra dữ liệu tươi (&lt; 3 nến) &amp; Lỗ trong ngày &lt;= 3%?]
+          ├── KHÔNG ĐẠT ──► [ĐÓNG SẠCH VỊ THẾ (Flatten) &amp; DỪNG BOT NGAY]
+          │
+          ▼ ĐẠT
+[3. Gọi strategy.target_weights(data)]
+          │
+          ▼
+[4. Khóa trần tổng đòn bẩy sum(|w|) &lt;= 1.0x]
+          │
+          ▼
+[5. Tính phần chênh lệch (target - vị thế hiện tại); bỏ qua nếu &lt; $10]
+          │
+          ▼
+[6. Đặt lệnh (hoặc ghi log [PAPER]) &amp; Lưu state.json]
+          │
+          ▼
+[7. Ngủ đến nến kế tiếp -&gt; Lặp lại bước 1]
+</code></pre>
+<hr />
+<h2 id="chuong-1-cai-at-moi-truong-khoi-tao-du-an-buoc-11-14">Chương 1: Cài đặt môi trường &amp; Khởi tạo dự án (Bước 1.1 → 1.4)</h2>
+<h3 id="buoc-11-kiem-tra-python-311">Bước 1.1: Kiểm tra Python 3.11+</h3>
+<p>Mở <strong>Terminal</strong> (macOS/Linux) hoặc <strong>PowerShell</strong> (Windows) và gõ:</p>
+<pre><code class="language-bash">python3 --version
+</code></pre>
+<ul>
+<li><strong>Checkpoint:</strong> Kết quả phải là <code>Python 3.11.x</code> hoặc <code>Python 3.12.x</code>.</li>
+<li>Nếu chưa có hoặc phiên bản thấp hơn 3.11: tải bản mới nhất tại <code>https://www.python.org/downloads/</code> (trên Windows nhớ tích ô <strong>"Add Python to PATH"</strong> khi cài).</li>
+</ul>
+<h3 id="buoc-12-tao-cay-thu-muc-du-an-chuan">Bước 1.2: Tạo cây thư mục dự án chuẩn</h3>
+<p>Chạy lệnh sau (macOS/Linux):</p>
+<pre><code class="language-bash">mkdir -p crypto-huy-opa/config crypto-huy-opa/data crypto-huy-opa/core \
+         crypto-huy-opa/strategies crypto-huy-opa/research/reports \
+         crypto-huy-opa/tests crypto-huy-opa/state crypto-huy-opa/logs
+cd crypto-huy-opa
+touch core/__init__.py strategies/__init__.py
+</code></pre>
+<p><em>(Trên Windows PowerShell, tạo lần lượt các thư mục con <code>config</code>, <code>data</code>, <code>core</code>, <code>strategies</code>, <code>research\reports</code>, <code>tests</code>, <code>state</code>, <code>logs</code> bên trong <code>crypto-huy-opa</code>).</em></p>
+<h3 id="buoc-13-tao-moi-truong-ao-cai-at-9-thu-vien-loi">Bước 1.3: Tạo môi trường ảo &amp; Cài đặt 9 thư viện lõi</h3>
+<pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate          # Windows PowerShell: .venv\Scripts\Activate.ps1
+
+pip install --upgrade pip
+pip install ccxt pandas numpy scikit-learn statsmodels pyarrow pyyaml pytest python-dotenv
+</code></pre>
+<ul>
+<li><strong>Checkpoint:</strong> Chạy <code>python -c "import ccxt, pandas, sklearn, statsmodels; print('OK')"</code> -&gt; Thấy in ra <code>OK</code> là thành công!</li>
+</ul>
+<h3 id="buoc-14-tao-3-file-cau-hinh-goc">Bước 1.4: Tạo 3 file cấu hình gốc</h3>
+<p><strong>1. Tạo file <code>config/default.yaml</code></strong> (nơi khóa cứng 5 giới hạn an toàn):</p>
+<pre><code class="language-yaml">exchange: bybit              # Hỗ trợ mọi sàn ccxt: bybit, binance, okx
+default_type: swap           # Hợp đồng tương lai vĩnh cửu (Long &amp; Short)
+testnet: true                # true = sàn giả lập Testnet
+paper: true                  # true = mô phỏng tại chỗ, KHÔNG gửi lệnh lên sàn
+paper_equity: 10000.0        # Vốn khởi điểm chế độ Paper (USDT)
+
+risk:
+  max_gross_leverage: 1.0    # Tổng |trọng số| không bao giờ vượt 1.0x vốn
+  max_daily_loss: 0.03       # Lỗ quá -3% trong ngày -&gt; đóng toàn bộ &amp; tắt bot
+  min_order_usd: 10.0        # Bỏ qua điều chỉnh nhỏ dưới $10 để tiết kiệm phí
+  max_stale_candles: 3       # Dừng nếu dữ liệu bị đứng quá 3 nến
+
+backtest:
+  fee_rate: 0.0006           # Phí taker 0.06% mỗi chiều
+  slippage_rate: 0.0002      # Trượt giá 0.02% mỗi chiều
+  use_funding: true          # Bắt buộc tính lịch sử Funding Rate thật
+  train_ratio: 0.60          # 60% dữ liệu đầu tối ưu / 40% cuối Out-of-Sample
+</code></pre>
+<p><strong>2. Tạo file <code>.env.example</code></strong> (dùng khi chuyển sang Testnet ở Chương 7):</p>
+<pre><code class="language-env">EXCHANGE_KEY=
+EXCHANGE_SECRET=
+EXCHANGE_PASSWORD=
+</code></pre>
+<p><strong>3. Tạo file <code>.gitignore</code></strong> (bảo vệ tuyệt đối API Key không bị lộ):</p>
+<pre><code class="language-gitignore">.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/*.parquet
+state/
+logs/
+</code></pre>
+<hr />
+<h2 id="chuong-2-xay-bo-tai-du-lieu-lich-su-mien-phi-ohlcv-funding-rate-buoc-21-22">Chương 2: Xây bộ tải dữ liệu lịch sử miễn phí — OHLCV &amp; Funding Rate (Bước 2.1 → 2.2)</h2>
+<h3 id="buoc-21-tao-file-coredata_loaderpy">Bước 2.1: Tạo file <code>core/data_loader.py</code></h3>
+<p>File này tải dữ liệu công khai từ sàn (không cần API Key), tự động phân trang nhiều năm, <strong>cắt bỏ nến cuối chưa đóng</strong> và lưu cache dạng <code>.parquet</code> tốc độ cao.</p>
+<pre><code class="language-python">&quot;&quot;&quot;Tải &amp; lưu cache dữ liệu lịch sử OHLCV và Funding Rate qua ccxt.&quot;&quot;&quot;
+from __future__ import annotations
+
+import time
+from pathlib import Path
+
+import ccxt
+import pandas as pd
+
+TF_SECONDS = {&quot;15m&quot;: 900, &quot;1h&quot;: 3600, &quot;4h&quot;: 14400, &quot;1d&quot;: 86400}
+
+
+def _slug(symbol: str) -&gt; str:
+    return symbol.replace(&quot;/&quot;, &quot;_&quot;).replace(&quot;:&quot;, &quot;_&quot;)
+
+
+def create_exchange(
+    exchange_id: str = &quot;bybit&quot;,
+    default_type: str = &quot;swap&quot;,
+    testnet: bool = False,
+    api_key: str | None = None,
+    secret: str | None = None,
+    password: str | None = None,
+) -&gt; ccxt.Exchange:
+    params: dict = {&quot;enableRateLimit&quot;: True, &quot;options&quot;: {&quot;defaultType&quot;: default_type}}
+    if api_key and secret:
+        params[&quot;apiKey&quot;] = api_key
+        params[&quot;secret&quot;] = secret
+    if password:
+        params[&quot;password&quot;] = password
+    ex = getattr(ccxt, exchange_id)(params)
+    if testnet:
+        ex.set_sandbox_mode(True)
+    return ex
+
+
+def fetch_ohlcv_history(
+    symbol: str,
+    timeframe: str = &quot;1d&quot;,
+    days: int = 1825,
+    exchange_id: str = &quot;bybit&quot;,
+    data_dir: str = &quot;data&quot;,
+    force_refresh: bool = False,
+) -&gt; pd.DataFrame:
+    cache_dir = Path(data_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_dir / f&quot;{exchange_id}_{_slug(symbol)}_{timeframe}.parquet&quot;
+    if cache_path.exists() and not force_refresh:
+        return pd.read_parquet(cache_path)
+
+    ex = create_exchange(exchange_id=exchange_id)
+    tf_ms = TF_SECONDS[timeframe] * 1000
+    now_ms = int(pd.Timestamp.now(tz=&quot;UTC&quot;).timestamp() * 1000)
+    cursor = now_ms - days * 86400 * 1000
+    rows: list[list] = []
+
+    while cursor &lt; now_ms - tf_ms:
+        batch = ex.fetch_ohlcv(symbol, timeframe=timeframe, since=cursor, limit=1000)
+        if not batch:
+            break
+        rows.extend(batch)
+        if batch[-1][0] &lt;= cursor:
+            break
+        cursor = batch[-1][0] + tf_ms
+        time.sleep(max(ex.rateLimit / 1000.0, 0.05))
+
+    df = pd.DataFrame(rows, columns=[&quot;ts&quot;, &quot;open&quot;, &quot;high&quot;, &quot;low&quot;, &quot;close&quot;, &quot;volume&quot;])
+    df[&quot;ts&quot;] = pd.to_datetime(df[&quot;ts&quot;], unit=&quot;ms&quot;, utc=True)
+    df = df.drop_duplicates(&quot;ts&quot;).sort_values(&quot;ts&quot;).set_index(&quot;ts&quot;)
+
+    # Cắt bỏ nến cuối cùng chưa đóng
+    cutoff = pd.Timestamp.now(tz=&quot;UTC&quot;) - pd.Timedelta(seconds=TF_SECONDS[timeframe])
+    df = df[df.index &lt;= cutoff]
+    df.to_parquet(cache_path)
+    return df
+
+
+def fetch_funding_history(
+    symbol: str,
+    days: int = 1200,
+    exchange_id: str = &quot;bybit&quot;,
+    data_dir: str = &quot;data&quot;,
+    force_refresh: bool = False,
+) -&gt; pd.Series:
+    cache_dir = Path(data_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_dir / f&quot;{exchange_id}_{_slug(symbol)}_funding.parquet&quot;
+    if cache_path.exists() and not force_refresh:
+        return pd.read_parquet(cache_path)[&quot;fundingRate&quot;]
+
+    ex = create_exchange(exchange_id=exchange_id)
+    if not ex.has.get(&quot;fetchFundingRateHistory&quot;):
+        return pd.Series(dtype=float, name=&quot;fundingRate&quot;)
+
+    now_ms = int(pd.Timestamp.now(tz=&quot;UTC&quot;).timestamp() * 1000)
+    cursor = now_ms - days * 86400 * 1000
+    rows, seen = [], set()
+
+    for _ in range(100):
+        batch = ex.fetch_funding_rate_history(symbol, since=cursor, limit=200)
+        new_items = [b for b in batch if b.get(&quot;timestamp&quot;) and b[&quot;timestamp&quot;] not in seen]
+        if not new_items:
+            break
+        for b in new_items:
+            seen.add(b[&quot;timestamp&quot;])
+            rows.append({&quot;ts&quot;: b[&quot;timestamp&quot;], &quot;fundingRate&quot;: float(b[&quot;fundingRate&quot;])})
+        max_ts = max(b[&quot;timestamp&quot;] for b in new_items)
+        if max_ts &gt;= now_ms - 8 * 3600 * 1000:
+            break
+        cursor = max_ts + 1
+        time.sleep(max(ex.rateLimit / 1000.0, 0.05))
+
+    if not rows:
+        return pd.Series(dtype=float, name=&quot;fundingRate&quot;)
+    df = pd.DataFrame(rows)
+    df[&quot;ts&quot;] = pd.to_datetime(df[&quot;ts&quot;], unit=&quot;ms&quot;, utc=True)
+    df = df.drop_duplicates(&quot;ts&quot;).sort_values(&quot;ts&quot;).set_index(&quot;ts&quot;)
+    df.to_parquet(cache_path)
+    return df[&quot;fundingRate&quot;]
+</code></pre>
+<h3 id="buoc-22-checkpoint-kiem-tra-tai-du-lieu-that">Bước 2.2: Checkpoint kiểm tra tải dữ liệu thật</h3>
+<p>Chạy lệnh sau trong terminal:</p>
+<pre><code class="language-bash">PYTHONPATH=. python -c &quot;
+from core.data_loader import fetch_ohlcv_history, fetch_funding_history
+df = fetch_ohlcv_history('BTC/USDT:USDT', '1d', days=1825)
+fd = fetch_funding_history('BTC/USDT:USDT', days=1825)
+print('Số nến BTC:', len(df), '| Từ:', df.index[0].date(), 'đến:', df.index[-1].date())
+print('Số kỳ Funding:', len(fd), '| Funding trung bình/kỳ:', round(fd.mean()*100, 4), '%')
+&quot;
+</code></pre>
+<ul>
+<li><strong>Kết quả mong đợi:</strong> Thấy in ra khoảng <code>1824</code> nến BTC và hàng nghìn kỳ funding rate, kèm 2 file <code>.parquet</code> trong thư mục <code>data/</code>. Nếu Bybit bị chặn tại mạng của bạn, truyền thêm <code>exchange_id='okx'</code> hoặc <code>'binance'</code>.</li>
+</ul>
+<hr />
+<h2 id="chuong-3-xay-bo-quan-tri-rui-ro-may-backtest-bai-test-chong-nhin-trom-tuong-lai-buoc-31-34">Chương 3: Xây Bộ Quản trị Rủi ro, Máy Backtest &amp; Bài Test Chống Nhìn Trộm Tương Lai (Bước 3.1 → 3.4)</h2>
+<h3 id="buoc-31-tao-file-coreriskpy-5-gioi-han-cung">Bước 3.1: Tạo file <code>core/risk.py</code> (5 giới hạn cứng)</h3>
+<pre><code class="language-python">&quot;&quot;&quot;Quản trị rủi ro cứng: kiểm tra dữ liệu tươi, cắt lỗ ngày, khóa đòn bẩy.&quot;&quot;&quot;
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import date
+import pandas as pd
+from core.data_loader import TF_SECONDS
+
+
+@dataclass
+class RiskConfig:
+    max_gross_leverage: float = 1.0
+    max_daily_loss: float = 0.03
+    min_order_usd: float = 10.0
+    max_stale_candles: int = 3
+
+
+class RiskManager:
+    def __init__(self, cfg: RiskConfig | None = None):
+        self.cfg = cfg or RiskConfig()
+        self.day: date | None = None
+        self.day_start_eq: float | None = None
+
+    def check_data_freshness(self, df: pd.DataFrame, timeframe: str, symbol: str) -&gt; None:
+        if df.empty:
+            raise RuntimeError(f&quot;{symbol}: Bảng dữ liệu rỗng&quot;)
+        age = (pd.Timestamp.now(tz=&quot;UTC&quot;) - df.index[-1]).total_seconds()
+        limit = self.cfg.max_stale_candles * TF_SECONDS[timeframe]
+        if age &gt; limit:
+            raise RuntimeError(f&quot;{symbol}: Dữ liệu bị trễ {age:.0f}s (giới hạn {limit}s)&quot;)
+
+    def check_daily_loss(self, equity: float) -&gt; bool:
+        today = pd.Timestamp.now(tz=&quot;UTC&quot;).date()
+        if self.day != today or self.day_start_eq is None:
+            self.day, self.day_start_eq = today, float(equity)
+        return float(equity) &gt;= self.day_start_eq * (1.0 - self.cfg.max_daily_loss)
+
+    def cap_leverage(self, weights: dict[str, float]) -&gt; dict[str, float]:
+        gross = sum(abs(float(w)) for w in weights.values())
+        if gross &lt;= self.cfg.max_gross_leverage or gross == 0.0:
+            return {k: float(v) for k, v in weights.items()}
+        scale = self.cfg.max_gross_leverage / gross
+        return {k: float(v) * scale for k, v in weights.items()}
+
+    def should_trade(self, delta_qty: float, price: float) -&gt; bool:
+        return abs(delta_qty * price) &gt;= self.cfg.min_order_usd
+</code></pre>
+<h3 id="buoc-32-tao-file-coremetricspy-bo-cham-iem-hieu-suat-chuan-quy">Bước 3.2: Tạo file <code>core/metrics.py</code> (Bộ chấm điểm hiệu suất chuẩn Quỹ)</h3>
+<pre><code class="language-python">&quot;&quot;&quot;Tính toán Sharpe, Sortino, Max Drawdown, Calmar, Turnover và Beta vs BTC.&quot;&quot;&quot;
+from __future__ import annotations
+
+import math
+import pandas as pd
+
+BARS_PER_YEAR = {&quot;15m&quot;: 365 * 96, &quot;1h&quot;: 365 * 24, &quot;4h&quot;: 365 * 6, &quot;1d&quot;: 365}
+
+
+def compute_metrics(
+    returns: pd.Series,
+    weights_df: pd.DataFrame | None = None,
+    benchmark_returns: pd.Series | None = None,
+    timeframe: str = &quot;1d&quot;,
+) -&gt; dict:
+    r = returns.dropna().astype(float)
+    n = len(r)
+    if n == 0:
+        return {&quot;bars&quot;: 0, &quot;total_return&quot;: 0.0, &quot;sharpe&quot;: 0.0, &quot;max_drawdown&quot;: 0.0}
+
+    ann = BARS_PER_YEAR.get(timeframe, 365)
+    equity = (1.0 + r).cumprod()
+    total_ret = float(equity.iloc[-1] - 1.0)
+    years = max(n / ann, 1e-9)
+    cagr = float(equity.iloc[-1] ** (1.0 / years) - 1.0) if equity.iloc[-1] &gt; 0 else -1.0
+
+    std = float(r.std(ddof=1)) if n &gt; 1 else 0.0
+    sharpe = float((r.mean() / std) * math.sqrt(ann)) if std &gt; 1e-12 else 0.0
+
+    dd = equity / equity.cummax() - 1.0
+    max_dd = float(dd.min())
+
+    turnover, trades = 0.0, 0
+    if weights_df is not None and not weights_df.empty:
+        w = weights_df.reindex(r.index).fillna(0.0)
+        dw = w.diff().abs()
+        dw.iloc[0] = w.iloc[0].abs()
+        bar_to = dw.sum(axis=1)
+        turnover = float(bar_to.mean() * (ann / 365.0))
+        trades = int((bar_to &gt; 1e-6).sum())
+
+    btc_beta = None
+    if benchmark_returns is not None:
+        al = pd.concat([r.rename(&quot;s&quot;), benchmark_returns.rename(&quot;b&quot;)], axis=1).dropna()
+        if len(al) &gt; 2 and al[&quot;b&quot;].var() &gt; 1e-12:
+            btc_beta = round(float(al[&quot;s&quot;].cov(al[&quot;b&quot;]) / al[&quot;b&quot;].var()), 3)
+
+    return {
+        &quot;bars&quot;: n,
+        &quot;total_return&quot;: round(total_ret, 4),
+        &quot;cagr&quot;: round(cagr, 4),
+        &quot;sharpe&quot;: round(sharpe, 3),
+        &quot;max_drawdown&quot;: round(max_dd, 4),
+        &quot;avg_daily_turnover&quot;: round(turnover, 4),
+        &quot;trade_count&quot;: trades,
+        &quot;btc_beta&quot;: btc_beta,
+    }
+</code></pre>
+<h3 id="buoc-33-tao-file-corebacktesterpy-may-backtest-nhan-qua-tung-nen">Bước 3.3: Tạo file <code>core/backtester.py</code> (Máy Backtest Nhân quả từng nến)</h3>
+<pre><code class="language-python">&quot;&quot;&quot;Máy Backtest từng nến: chỉ cấp dữ liệu quá khứ, trừ phí + trượt giá + funding, chia 60/40.&quot;&quot;&quot;
+from __future__ import annotations
+
+import copy
+from dataclasses import dataclass
+from typing import Any
+
+import numpy as np
+import pandas as pd
+
+from core.metrics import compute_metrics
+from core.risk import RiskConfig, RiskManager
+
+
+@dataclass
+class BacktestConfig:
+    fee_rate: float = 0.0006
+    slippage_rate: float = 0.0002
+    max_gross_leverage: float = 1.0
+    train_ratio: float = 0.60
+    use_funding: bool = True
+
+
+@dataclass
+class BacktestResult:
+    net_returns: pd.Series
+    weights: pd.DataFrame
+    equity_curve: pd.Series
+    metrics_is: dict
+    metrics_oos: dict
+    metrics_full: dict
+    benchmark_oos: dict
+
+
+def _align_funding(funding_map: dict[str, pd.Series] | None, index: pd.DatetimeIndex, symbols: list[str]) -&gt; pd.DataFrame:
+    out = pd.DataFrame(0.0, index=index, columns=symbols)
+    if not funding_map or len(index) &lt; 2:
+        return out
+    for sym in symbols:
+        s = funding_map.get(sym)
+        if s is None or s.empty:
+            continue
+        s = s.sort_index()
+        pos = index.searchsorted(s.index, side=&quot;left&quot;)
+        ok = (pos &gt; 0) &amp; (pos &lt; len(index))
+        if np.any(ok):
+            g = pd.Series(s.to_numpy()[ok], index=index[pos[ok]]).groupby(level=0).sum()
+            out.loc[g.index, sym] = g.to_numpy()
+    return out
+
+
+def run_backtest(
+    strategy: Any,
+    data: dict[str, pd.DataFrame],
+    cfg: BacktestConfig | None = None,
+    funding: dict[str, pd.Series] | None = None,
+) -&gt; BacktestResult:
+    cfg = cfg or BacktestConfig()
+    strat = copy.deepcopy(strategy)
+    symbols = list(strat.symbols)
+
+    common_idx = None
+    for s in symbols:
+        common_idx = data[s].index if common_idx is None else common_idx.intersection(data[s].index)
+    common_idx = common_idx.sort_values()
+
+    aligned = {s: data[s].loc[common_idx] for s in symbols}
+    close_df = pd.DataFrame({s: aligned[s][&quot;close&quot;] for s in symbols}, index=common_idx)
+    next_ret = close_df.pct_change().shift(-1)
+    fund_df = _align_funding(funding, common_idx, symbols) if cfg.use_funding else pd.DataFrame(0.0, index=common_idx, columns=symbols)
+
+    risk = RiskManager(RiskConfig(max_gross_leverage=cfg.max_gross_leverage))
+    prev_w = {s: 0.0 for s in symbols}
+    cost_rate = cfg.fee_rate + cfg.slippage_rate
+    ts_list, w_rows, net_list = [], [], []
+
+    for i in range(int(strat.history), len(common_idx) - 1):
+        # CHỈ truyền dữ liệu quá khứ [0..i]
+        window_data = {s: aligned[s].iloc[: i + 1] for s in symbols}
+        w = risk.cap_leverage({s: float(strat.target_weights(window_data).get(s, 0.0)) for s in symbols})
+
+        turnover = sum(abs(w[s] - prev_w[s]) for s in symbols)
+        gross = sum(w[s] * float(next_ret.iloc[i][s]) for s in symbols)
+        fund_cost = sum(w[s] * float(fund_df.iloc[i + 1][s]) for s in symbols)
+        net = gross - turnover * cost_rate - fund_cost
+
+        ts_list.append(common_idx[i + 1])
+        w_rows.append(w)
+        net_list.append(net)
+        prev_w = w
+
+    res_idx = pd.DatetimeIndex(ts_list)
+    net_s = pd.Series(net_list, index=res_idx, name=&quot;net_return&quot;)
+    w_df = pd.DataFrame(w_rows, index=res_idx)
+    eq = (1.0 + net_s).cumprod()
+
+    bench_sym = &quot;BTC/USDT:USDT&quot; if &quot;BTC/USDT:USDT&quot; in data else symbols[0]
+    bench = data[bench_sym][&quot;close&quot;].pct_change().reindex(res_idx).fillna(0.0)
+    split = int(len(res_idx) * cfg.train_ratio)
+
+    return BacktestResult(
+        net_returns=net_s,
+        weights=w_df,
+        equity_curve=eq,
+        metrics_is=compute_metrics(net_s.iloc[:split], w_df.iloc[:split], bench.iloc[:split], strat.timeframe),
+        metrics_oos=compute_metrics(net_s.iloc[split:], w_df.iloc[split:], bench.iloc[split:], strat.timeframe),
+        metrics_full=compute_metrics(net_s, w_df, bench, strat.timeframe),
+        benchmark_oos=compute_metrics(bench.iloc[split:], None, bench.iloc[split:], strat.timeframe),
+    )
+</code></pre>
+<h3 id="buoc-34-tao-bai-test-tu-ong-bat-loi-look-ahead-teststest_no_lookaheadpy">Bước 3.4: Tạo bài test tự động bắt lỗi Look-Ahead (<code>tests/test_no_lookahead.py</code>)</h3>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from strategies.hp_filter import Strategy as HPFilter
+from strategies.knn import Strategy as KNN
+from strategies.statarb import Strategy as StatArb
+
+
+def _fake_ohlcv(n=260, seed=1):
+    rng = np.random.default_rng(seed)
+    close = 30000 * np.exp(np.cumsum(rng.normal(0.0005, 0.025, n)))
+    idx = pd.date_range(&quot;2024-01-01&quot;, periods=n, freq=&quot;1D&quot;, tz=&quot;UTC&quot;)
+    return pd.DataFrame({&quot;open&quot;: close, &quot;high&quot;: close * 1.01, &quot;low&quot;: close * 0.99, &quot;close&quot;: close, &quot;volume&quot;: rng.uniform(1e6, 5e6, n)}, index=idx)
+
+
+def test_hp_filter_no_lookahead():
+    df = _fake_ohlcv(250, seed=1)
+    df_mut = df.copy()
+    df_mut.iloc[200:, df_mut.columns.get_loc(&quot;close&quot;)] *= 10.0  # Phá dữ liệu tương lai
+    s1, s2 = HPFilter(window=60, t1=5, t2=15, lam=14400), HPFilter(window=60, t1=5, t2=15, lam=14400)
+    assert np.isclose(s1.causal_trend(df[&quot;close&quot;].iloc[:200]).iloc[-1], s2.causal_trend(df_mut[&quot;close&quot;]).iloc[199], rtol=1e-12)
+
+
+def test_knn_no_lookahead():
+    df = _fake_ohlcv(260, seed=2)
+    df_mut = df.copy()
+    df_mut.iloc[210:, df_mut.columns.get_loc(&quot;close&quot;)] *= 0.1
+    assert np.isclose(KNN(T=5, train=120).predict(df.iloc[:210]), KNN(T=5, train=120).predict(df_mut.iloc[:210]), rtol=1e-12)
+
+
+def test_statarb_dollar_neutral():
+    syms = [f&quot;C{i}/USDT:USDT&quot; for i in range(8)]
+    data = {s: _fake_ohlcv(160, seed=10 + i) for i, s in enumerate(syms)}
+    w = list(StatArb(symbols=syms, cov_window=120, d=3).target_weights(data).values())
+    assert abs(sum(w)) &lt; 1e-12 and abs(sum(abs(x) for x in w) - 1.0) &lt; 1e-12
+</code></pre>
+<hr />
+<h2 id="chuong-4-cai-at-tron-bo-5-chien-luoc-cot-loi-bo-ghep-alpha-combo-buoc-41-46">Chương 4: Cài đặt trọn bộ 5 Chiến lược Cốt lõi + Bộ Ghép Alpha Combo (Bước 4.1 → 4.6)</h2>
+<h3 id="buoc-41-chien-luoc-1-hodrickprescott-filter-strategieshp_filterpy-muc-81">Bước 4.1: Chiến lược 1 — Hodrick–Prescott Filter (<code>strategies/hp_filter.py</code> — Mục 8.1)</h3>
+<ul>
+<li><strong>Hiểu nhanh:</strong> Giống tai nghe chống ồn — tách giá thành xu hướng mượt <em>S<em></em>(<em>t</em>) + nhiễu <em>&nu;</em>(<em>t</em>), rồi mới lấy MA nhanh cắt MA chậm trên <em>S</em></em>(<em>t</em>).</li>
+<li><strong>Bẫy chết người:</strong> Chạy <code>hpfilter</code> 1 lần trên toàn bộ lịch sử sẽ nhìn trộm tương lai. Phải chạy vòng lặp rolling chỉ trên cửa sổ quá khứ.</li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from statsmodels.tsa.filters.hp_filter import hpfilter
+
+
+class Strategy:
+    symbols = [&quot;BTC/USDT:USDT&quot;]
+    timeframe = &quot;1d&quot;
+
+    def __init__(self, window=365, t1=10, t2=30, n_per_year=365, lam=None):
+        self.window, self.t1, self.t2 = window, t1, t2
+        self.lam = float(lam) if lam is not None else float(100 * (n_per_year ** 2))
+        self.history = window + t2 + 5
+
+    def causal_trend(self, close: pd.Series) -&gt; pd.Series:
+        s = close.to_numpy(dtype=float)
+        out = np.full(len(s), np.nan)
+        for t in range(self.window, len(s) + 1):
+            _, tr = hpfilter(s[t - self.window : t], lamb=self.lam)
+            out[t - 1] = tr[-1]
+        return pd.Series(out, index=close.index)
+
+    def target_weights(self, data):
+        sym = self.symbols[0]
+        close = data[sym][&quot;close&quot;].iloc[-(self.window + self.t2) :]
+        s_star = self.causal_trend(close).dropna()
+        ma1, ma2 = s_star.iloc[-self.t1 :].mean(), s_star.iloc[-self.t2 :].mean()
+        return {sym: 1.0 if ma1 &gt; ma2 else -1.0}
+</code></pre>
+<h3 id="buoc-42-chien-luoc-2-k-nearest-neighbors-strategiesknnpy-muc-317">Bước 4.2: Chiến lược 2 — k-Nearest Neighbors (<code>strategies/knn.py</code> — Mục 3.17)</h3>
+<ul>
+<li><strong>Hiểu nhanh:</strong> Tìm <em>k</em> = &lfloor;&radic;<em>T*</em>&rfloor; ngày trong quá khứ có độ lệch giá và khối lượng giống hệt hôm nay nhất, rồi lấy trung bình lợi suất <em>T</em> ngày sau đó.</li>
+</ul>
+<pre><code class="language-python">import math
+import numpy as np
+import pandas as pd
+from sklearn.neighbors import KNeighborsRegressor
+
+
+class Strategy:
+    symbols = [&quot;BTC/USDT:USDT&quot;]
+    timeframe = &quot;1d&quot;
+
+    def __init__(self, T=5, price_w=(5, 20, 60), vol_w=(5, 20), train=365, z1=0.01, z2=0.0, weights=&quot;uniform&quot;):
+        self.T, self.price_w, self.vol_w = T, price_w, vol_w
+        self.train, self.z1, self.z2, self.weights = train, z1, z2, weights
+        self.history = train + max(price_w + vol_w + (60,)) + T + 5
+        self.pos = 0
+
+    def features(self, df):
+        p, v = df[&quot;close&quot;], df[&quot;volume&quot;]
+        X = pd.DataFrame(index=df.index)
+        for w in self.price_w:
+            X[f&quot;p{w}&quot;] = p.rolling(w).mean() / p - 1.0
+        v_base = v.rolling(60).mean().replace(0.0, np.nan)
+        for w in self.vol_w:
+            X[f&quot;v{w}&quot;] = v.rolling(w).mean() / v_base
+        return X
+
+    def predict(self, df):
+        X = self.features(df)
+        Y = df[&quot;close&quot;].shift(-self.T) / df[&quot;close&quot;] - 1.0
+        hist = pd.concat([X, Y.rename(&quot;Y&quot;)], axis=1).dropna().iloc[-self.train :]
+        cols = list(X.columns)
+        lo, hi = hist[cols].min(), hist[cols].max()
+        span = (hi - lo).replace(0.0, 1.0)
+        norm = lambda Z: ((Z - lo) / span).to_numpy(dtype=float)
+        k = max(1, int(math.floor(math.sqrt(len(hist)))))
+        model = KNeighborsRegressor(n_neighbors=k, weights=self.weights).fit(norm(hist[cols]), hist[&quot;Y&quot;].to_numpy())
+        return float(model.predict(norm(X.iloc[[-1]]))[0])
+
+    def target_weights(self, data):
+        sym = self.symbols[0]
+        y = self.predict(data[sym])
+        if self.pos == 1 and y &lt;= self.z2: self.pos = 0
+        if self.pos == -1 and y &gt;= -self.z2: self.pos = 0
+        if self.pos == 0:
+            self.pos = 1 if y &gt; self.z1 else (-1 if y &lt; -self.z1 else 0)
+        return {sym: float(self.pos)}
+</code></pre>
+<h3 id="buoc-43-chien-luoc-3-mang-neural-ann-15-phut-strategiesannpy-muc-182">Bước 4.3: Chiến lược 3 — Mạng Neural ANN 15 phút (<code>strategies/ann.py</code> — Mục 18.2)</h3>
+<ul>
+<li><strong>Hiểu nhanh:</strong> Viết riêng cho BTC khung 15m. Chia lợi suất nến kế tiếp thành 3 nhóm (Tăng mạnh / Đi ngang / Giảm mạnh), dùng mạng <code>MLPClassifier(32, 16)</code> huấn luyện lại mỗi ngày trên 60 ngày gần nhất.</li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.neural_network import MLPClassifier
+
+BARS_PER_DAY = 96
+
+def ema(x, lam, tau):
+    w = (lam ** np.arange(tau)) * (1 - lam) / (1 - lam ** tau)
+    return x.rolling(tau).apply(lambda a: float(np.dot(w, a[::-1])), raw=True)
+
+def emsd(x, lam, tau):
+    w = lam ** np.arange(tau)
+    mn, vn = (1 - lam) / (1 - lam ** tau), (1 - lam) / (lam - lam ** tau)
+    return x.rolling(tau).apply(lambda a: float(np.sqrt(max(0.0, vn * np.dot(w, (a[::-1] - np.dot(w, a[::-1]) * mn) ** 2)))), raw=True)
+
+def rsi(x, tau):
+    up, dn = x.clip(lower=0).rolling(tau).sum(), (-x).clip(lower=0).rolling(tau).sum()
+    return (up / (up + dn).replace(0.0, np.nan)).fillna(0.5)
+
+class Strategy:
+    symbols = [&quot;BTC/USDT:USDT&quot;]
+    timeframe = &quot;15m&quot;
+
+    def __init__(self, T1=BARS_PER_DAY, taus=(2, 4, 12, 24), rsi_taus=(12, 24, 48), K=3, train_days=60, min_prob=0.45):
+        self.T1, self.taus, self.rsi_taus, self.K, self.min_prob = T1, taus, rsi_taus, K, min_prob
+        self.train, self.retrain_every = train_days * BARS_PER_DAY, BARS_PER_DAY
+        self.history = self.train + T1 + max(taus + rsi_taus) + 10
+        self.model, self.bars_since_fit, self.pos = None, 0, 0
+
+    def target_weights(self, data):
+        sym = self.symbols[0]
+        R = data[sym][&quot;close&quot;].pct_change()
+        past = R.shift(1).rolling(self.T1)
+        rh = (R - past.mean()) / past.std().replace(0.0, np.nan)
+        X = pd.DataFrame({&quot;rhat&quot;: rh})
+        for tau in self.taus:
+            lam = 1 - 1 / tau
+            X[f&quot;ema{tau}&quot;], X[f&quot;emsd{tau}&quot;] = ema(rh, lam, tau), emsd(rh, lam, tau)
+        for tau in self.rsi_taus:
+            X[f&quot;rsi{tau}&quot;] = rsi(rh, tau)
+
+        if self.model is None or self.bars_since_fit &gt;= self.retrain_every:
+            d = pd.concat([X, rh.shift(-1).rename(&quot;y&quot;)], axis=1).dropna().iloc[-self.train :]
+            q = np.quantile(d[&quot;y&quot;], np.linspace(0, 1, self.K + 1)[1:-1])
+            labels = np.searchsorted(q, d[&quot;y&quot;].to_numpy(), side=&quot;right&quot;)
+            self.model = MLPClassifier((32, 16), activation=&quot;relu&quot;, solver=&quot;sgd&quot;, learning_rate_init=0.01, momentum=0.9, max_iter=300, early_stopping=True, random_state=0)
+            self.model.fit(d[X.columns].to_numpy(), labels)
+            self.bars_since_fit = 0
+        self.bars_since_fit += 1
+
+        p = self.model.predict_proba(X.iloc[[-1]].to_numpy())[0]
+        best_i = int(np.argmax(p))
+        if p[best_i] &gt;= self.min_prob:
+            cls = int(self.model.classes_[best_i])
+            if cls == self.K - 1: self.pos = 1
+            elif cls == 0: self.pos = -1
+        return {sym: float(self.pos)}
+</code></pre>
+<h3 id="buoc-44-chien-luoc-4-statistical-arbitrage-10-coin-strategiesstatarbpy-muc-318">Bước 4.4: Chiến lược 4 — Statistical Arbitrage 10 Coin (<code>strategies/statarb.py</code> — Mục 3.18)</h3>
+<ul>
+<li><strong>Hiểu nhanh:</strong> Long nhóm coin yếu hơn trung bình rổ, Short nhóm coin nóng hơn trung bình rổ, luôn giữ tổng trọng số bằng <code>0</code> (Dollar-Neutral) để không phụ thuộc chiều lên/xuống của BTC.</li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+
+DEFAULT_BASKET = [f&quot;{c}/USDT:USDT&quot; for c in [&quot;BTC&quot;, &quot;ETH&quot;, &quot;SOL&quot;, &quot;BNB&quot;, &quot;XRP&quot;, &quot;DOGE&quot;, &quot;ADA&quot;, &quot;AVAX&quot;, &quot;LINK&quot;, &quot;DOT&quot;]]
+
+
+class Strategy:
+    symbols = list(DEFAULT_BASKET)
+    timeframe = &quot;1d&quot;
+
+    def __init__(self, symbols=None, cov_window=120, d=3, ridge=1e-4, signal_mode=&quot;mean_reversion&quot;):
+        if symbols is not None:
+            self.symbols = list(symbols)
+        self.cov_window, self.d, self.ridge, self.signal_mode = cov_window, d, ridge, signal_mode
+        self.history = cov_window + d + 5
+
+    def target_weights(self, data):
+        closes = {s: data[s][&quot;close&quot;] for s in self.symbols if s in data}
+        rets = pd.DataFrame(closes).pct_change().dropna().iloc[-self.cov_window :]
+        C = rets.cov().to_numpy() + self.ridge * np.eye(len(rets.columns))
+        Cinv = np.linalg.pinv(C)
+
+        r = rets.iloc[-self.d :].sum()
+        E = (-(r - r.mean()) if self.signal_mode == &quot;mean_reversion&quot; else (r - r.mean())).to_numpy()
+        a = Cinv @ E
+        b = Cinv @ np.ones(len(E))
+        w = a - b * (a.sum() / b.sum())  # Dollar-neutral: sum(w) == 0
+        w = w / np.abs(w).sum()          # Unit gross: sum(|w|) == 1
+        return dict(zip(rets.columns, w.tolist()))
+</code></pre>
+<h3 id="buoc-45-chien-luoc-5-cam-xuc-x-bernoulli-naive-bayes-strategiessentiment_nbpy-muc-183">Bước 4.5: Chiến lược 5 — Cảm xúc X / Bernoulli Naïve Bayes (<code>strategies/sentiment_nb.py</code> — Mục 18.3)</h3>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import BernoulliNB
+
+VOCAB = [&quot;bullish&quot;, &quot;bearish&quot;, &quot;pump&quot;, &quot;dump&quot;, &quot;moon&quot;, &quot;crash&quot;, &quot;buy&quot;, &quot;sell&quot;, &quot;long&quot;, &quot;short&quot;,
+         &quot;ath&quot;, &quot;dip&quot;, &quot;rekt&quot;, &quot;hodl&quot;, &quot;breakout&quot;, &quot;liquidation&quot;, &quot;fud&quot;, &quot;fomo&quot;, &quot;rally&quot;, &quot;etf&quot;,
+         &quot;sec&quot;, &quot;whale&quot;, &quot;support&quot;, &quot;resistance&quot;, &quot;bottom&quot;, &quot;top&quot;, &quot;capitulation&quot;, &quot;squeeze&quot;, &quot;bubble&quot;]
+
+
+class Strategy:
+    symbols = [&quot;BTC/USDT:USDT&quot;]
+    timeframe = &quot;1h&quot;
+
+    def __init__(self, tweet_fetcher=None, horizon_h=1):
+        self.vec = CountVectorizer(vocabulary=VOCAB, binary=True)
+        self.nb = BernoulliNB(alpha=1.0)
+        self.horizon = pd.Timedelta(hours=horizon_h)
+        self.tweet_fetcher = tweet_fetcher
+        self.history, self.pos = 24 * 30, 0
+
+    def fit(self, tweets: pd.DataFrame, close: pd.Series):
+        t = pd.to_datetime(tweets[&quot;time&quot;], utc=True).dt.floor(&quot;h&quot;)
+        p0, p1 = close.reindex(t).to_numpy(), close.reindex(t + self.horizon).to_numpy()
+        ok = ~np.isnan(p0) &amp; ~np.isnan(p1)
+        self.nb.fit(self.vec.transform(tweets[&quot;text&quot;].str.lower()[ok]), (p1[ok] &gt; p0[ok]).astype(int))
+
+    def predict(self, texts) -&gt; int:
+        X = self.vec.transform(pd.Series(texts, dtype=str).str.lower()).toarray()
+        logp = self.nb.feature_log_prob_
+        log1m = np.log1p(-np.exp(logp))
+        # Cộng log-likelihood toàn bộ tweet trong giờ, chỉ cộng P(C) đúng 1 lần (Eq. 546)
+        score = self.nb.class_log_prior_ + (X @ logp.T + (1.0 - X) @ log1m.T).sum(axis=0)
+        return int(self.nb.classes_[int(np.argmax(score))])
+
+    def target_weights(self, data):
+        sym = self.symbols[0]
+        now = data[sym].index[-1] + pd.Timedelta(hours=1)
+        tweets = self.tweet_fetcher(now - pd.Timedelta(hours=1), now)
+        if len(tweets):
+            self.pos = 1 if self.predict(tweets[&quot;text&quot;]) == 1 else -1
+        return {sym: float(self.pos)}
+</code></pre>
+<h3 id="buoc-46-bo-ghep-alpha-combo-11-buoc-strategiesalpha_combopy-muc-320">Bước 4.6: Bộ ghép Alpha Combo 11 bước (<code>strategies/alpha_combo.py</code> — Mục 3.20)</h3>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+
+
+def alpha_combo_weights(R: np.ndarray, d: int = 5) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quy trình 11 bước Kakushadze-Yu. R có dạng [N alphas, M+1 kỳ], cột 0 là kỳ gần nhất.&quot;&quot;&quot;
+    R = np.asarray(R, dtype=float)
+    N, M1 = R.shape
+    M = M1 - 1
+    assert N &gt; M - 1, f&quot;Cần nhiều alpha hơn M-1 kỳ (N={N}, M-1={M-1})&quot;
+
+    X = R - R.mean(axis=1, keepdims=True)
+    sigma = np.maximum(np.sqrt((X ** 2).sum(axis=1) / M), 1e-12)
+    Y = (X / sigma[:, None])[:, :M]
+    Lam = (Y - Y.mean(axis=0, keepdims=True))[:, : M - 1]
+    E_tilde = R[:, :d].mean(axis=1) / sigma
+    beta, *_ = np.linalg.lstsq(Lam, E_tilde, rcond=None)
+    eps = E_tilde - Lam @ beta
+    w = eps / sigma
+    return w / np.abs(w).sum()
+</code></pre>
+<ul>
+<li><strong>Checkpoint kết thúc Chương 4:</strong> Chạy <code>pytest -v</code> -&gt; Phải thấy <strong>3/3 bài test PASS</strong> (xác nhận 0% look-ahead và Stat Arb tổng trọng số bằng 0 tuyệt đối).</li>
+</ul>
+<hr />
+<h2 id="chuong-5-chay-backtest-au-tien-oc-chi-so-case-study-thuc-te-buoc-51-53">Chương 5: Chạy Backtest Đầu Tiên, Đọc Chỉ Số &amp; Case Study Thực Tế (Bước 5.1 → 5.3)</h2>
+<h3 id="buoc-51-tao-script-chay-backtest-mau-researchrun_demopy">Bước 5.1: Tạo script chạy Backtest mẫu (<code>research/run_demo.py</code>)</h3>
+<pre><code class="language-python">from core.backtester import BacktestConfig, run_backtest
+from core.data_loader import fetch_funding_history, fetch_ohlcv_history
+from strategies.statarb import DEFAULT_BASKET, Strategy as StatArb
+
+data = {s: fetch_ohlcv_history(s, &quot;1d&quot;, days=1200) for s in DEFAULT_BASKET}
+funding = {s: fetch_funding_history(s, days=1200) for s in DEFAULT_BASKET}
+
+res = run_backtest(StatArb(cov_window=120, d=3), data, BacktestConfig(), funding)
+print(&quot;60% In-Sample :&quot;, res.metrics_is)
+print(&quot;40% Out-Sample:&quot;, res.metrics_oos)
+print(&quot;BTC Buy &amp; Hold:&quot;, res.benchmark_oos)
+</code></pre>
+<p>Chạy lệnh:</p>
+<pre><code class="language-bash">PYTHONPATH=. python research/run_demo.py
+</code></pre>
+<h3 id="buoc-52-cach-oc-6-chi-so-cot-loi">Bước 5.2: Cách đọc 6 chỉ số cốt lõi</h3>
+<table>
+<thead>
+<tr>
+<th>Chỉ số</th>
+<th>Ý nghĩa thực tế</th>
+<th>Ngưỡng mục tiêu trên Out-of-Sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sharpe Ratio</strong></td>
+<td>Lợi nhuận trên mỗi đơn vị rủi ro biến động</td>
+<td><code>&gt; 1.0</code> (tốt); <code>&lt; 0.5</code> (quá yếu)</td>
+</tr>
+<tr>
+<td><strong>Max Drawdown</strong></td>
+<td>Mức sụt giảm sâu nhất từ đỉnh xuống đáy</td>
+<td>Nên nhỏ hơn <code>-20%</code></td>
+</tr>
+<tr>
+<td><strong>Plateau %</strong></td>
+<td>% bộ tham số lân cận cùng có lãi trên OOS</td>
+<td><code>&gt; 60%</code> (tránh chọn tham số quá khớp tham số (overfitting))</td>
+</tr>
+<tr>
+<td><strong>Daily Turnover</strong></td>
+<td>% vốn xoay vòng mỗi ngày</td>
+<td><code>&lt; 20%/ngày</code> với khung ngày</td>
+</tr>
+<tr>
+<td><strong>BTC Beta</strong></td>
+<td>Mức độ lệ thuộc vào chiều lên/xuống của BTC</td>
+<td>Gần <code>0</code> = trung tính thị trường</td>
+</tr>
+<tr>
+<td><strong>IS vs OOS</strong></td>
+<td>60% tối ưu vs 40% tương lai giữ kín</td>
+<td>OOS không được sụp đổ so với IS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="buoc-53-case-study-thuc-te-chay-tren-du-lieu-that-bybit-20212026">Bước 5.3: Case Study Thực Tế (Chạy trên dữ liệu thật Bybit 2021–2026)</h3>
+<p>Bảng dưới là kết quả kiểm chứng thật trên hệ thống này (5 năm BTC + 3.3 năm 10 coin, đã trừ <code>0.06%</code> phí + <code>0.02%</code> trượt giá + <strong>Funding Rate thật</strong>, 40% Out-of-Sample):</p>
+<table>
+<thead>
+<tr>
+<th>Chiến lược</th>
+<th style="text-align: right;">Cấu hình</th>
+<th style="text-align: right;">Plateau OOS+</th>
+<th style="text-align: right;">IS Sharpe</th>
+<th style="text-align: right;">OOS Sharpe</th>
+<th style="text-align: right;">OOS Return</th>
+<th style="text-align: right;">OOS MaxDD</th>
+<th style="text-align: right;">BTC Beta</th>
+<th>Phán quyết</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HP Filter</strong> (8.1)</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">33.3%</td>
+<td style="text-align: right;"><code>+0.870</code></td>
+<td style="text-align: right;"><code>-0.870</code></td>
+<td style="text-align: right;"><code>-56.9%</code></td>
+<td style="text-align: right;"><code>-61.7%</code></td>
+<td style="text-align: right;"><code>-0.415</code></td>
+<td><strong>KILL</strong></td>
+</tr>
+<tr>
+<td><strong>Stat Arb</strong> (3.18)</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">4.2%</td>
+<td style="text-align: right;"><code>+0.282</code></td>
+<td style="text-align: right;"><code>-1.501</code></td>
+<td style="text-align: right;"><code>-30.1%</code></td>
+<td style="text-align: right;"><code>-36.6%</code></td>
+<td style="text-align: right;"><code>-0.053</code></td>
+<td><strong>KILL (bản 1d)</strong></td>
+</tr>
+<tr>
+<td><strong>kNN</strong> (3.17)</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0%</td>
+<td style="text-align: right;"><code>-0.014</code></td>
+<td style="text-align: right;"><code>-0.770</code></td>
+<td style="text-align: right;"><code>-44.7%</code></td>
+<td style="text-align: right;"><code>-56.8%</code></td>
+<td style="text-align: right;"><code>+0.121</code></td>
+<td><strong>KILL</strong></td>
+</tr>
+<tr>
+<td><strong>Alpha Combo</strong> (3.20)</td>
+<td style="text-align: right;">48 alphas</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><code>-0.927</code></td>
+<td style="text-align: right;"><strong><code>+0.166</code></strong></td>
+<td style="text-align: right;"><strong><code>+1.1%</code></strong></td>
+<td style="text-align: right;"><strong><code>-6.0%</code></strong></td>
+<td style="text-align: right;"><strong><code>-0.006</code></strong></td>
+<td><strong>TIỀM NĂNG</strong></td>
+</tr>
+<tr>
+<td><em>Chia đều 48 alphas</em></td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><code>-2.333</code></td>
+<td style="text-align: right;"><code>-28.0%</code></td>
+<td style="text-align: right;"><code>-32.5%</code></td>
+<td style="text-align: right;"><code>-0.045</code></td>
+<td>Benchmark nội bộ</td>
+</tr>
+<tr>
+<td><em>Mua &amp; Giữ BTC (OOS)</em></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><code>-1.025</code></td>
+<td style="text-align: right;"><code>-49.9%</code></td>
+<td style="text-align: right;"><code>-53.0%</code></td>
+<td style="text-align: right;"><code>1.000</code></td>
+<td>Benchmark</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Giá trị lớn nhất của bảng này:</strong> Thay vì mù quáng chạy tiền thật và lỗ 30–57%, hệ thống backtest 6 Gates đã bảo vệ bạn ngay từ trên giấy — đồng thời chứng minh <strong>Alpha Combo</strong> cắt drawdown từ <code>-53%</code> xuống chỉ còn <code>-6%</code>. Việc của bạn tiếp theo là nạp thêm các chiến lược có lợi thế cấu trúc cao ở <strong>Phụ lục</strong> (như <em>Perp Funding Carry</em>, <em>Volatility Targeting</em>, <em>Dual Momentum</em>) vào bộ ghép Alpha Combo.</p>
+</blockquote>
+<hr />
+<h2 id="chuong-6-bo-loc-6-cong-6-gates-prompt-giam-oc-quan-tri-rui-ro">Chương 6: Bộ Lọc 6 Cổng (6 Gates) &amp; Prompt Giám Đốc Quản Trị Rủi Ro</h2>
+<p>Tuyệt đối chỉ nạp tiền thật khi chiến lược vượt qua <strong>đủ 6/6 Cổng</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Cổng</th>
+<th>Câu hỏi kiểm tra</th>
+<th>Điều kiện ĐẠT (PASS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Look-ahead</strong></td>
+<td>Code có nhìn trộm tương lai không?</td>
+<td>PASS <code>pytest</code>; bỏ nến chưa đóng; filter/label chỉ dùng quá khứ</td>
+</tr>
+<tr>
+<td><strong>2. Phí &amp; Funding</strong></td>
+<td>Sau chi phí còn lợi nhuận không?</td>
+<td>Dương rõ rệt sau <code>0.06%</code> phí/chiều + trượt giá + funding thật</td>
+</tr>
+<tr>
+<td><strong>3. Out-of-Sample</strong></td>
+<td>Chạy trên 40% dữ liệu cuối thế nào?</td>
+<td>OOS duy trì Sharpe &amp; Return dương ổn định</td>
+</tr>
+<tr>
+<td><strong>4. Plateau</strong></td>
+<td>Có phải chọn tham số quá khớp tham số (overfitting) không?</td>
+<td>Các tham số xung quanh cho kết quả tương đồng (<code>&gt; 60%</code> dương)</td>
+</tr>
+<tr>
+<td><strong>5. Paper / Testnet</strong></td>
+<td>Chạy thật có khớp backtest không?</td>
+<td>Chạy 2–4 tuần Paper &amp; Testnet với độ lệch nhỏ</td>
+</tr>
+<tr>
+<td><strong>6. Vốn nhỏ</strong></td>
+<td>Đã sẵn sàng cho ngày xấu nhất?</td>
+<td>Bắt đầu vốn nhỏ chấp nhận mất được + đã test nút dừng <code>-3%/ngày</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="prompt-giam-oc-quan-tri-rui-ro-copy-paste-gui-ai-sau-moi-lan-backtest">Prompt "Giám Đốc Quản Trị Rủi Ro" (Copy-paste gửi AI sau mỗi lần backtest)</h3>
+<pre><code class="language-text">Bạn là Giám đốc Quản trị Rủi ro (Risk Manager) cực kỳ nghiêm khắc.
+Nhiệm vụ của bạn là tìm mọi lý do để LOẠI BỎ (KILL) chiến lược này.
+Hãy kiểm tra code và báo cáo backtest của tôi:
+1. Có dấu hiệu look-ahead bias trong feature, label hay filter không?
+2. Lợi nhuận có đến từ 1-2 lệnh may mắn hay 1 giai đoạn thị trường duy nhất không?
+3. Số lệnh có quá ít để kết luận về mặt thống kê không?
+4. Phí giao dịch, trượt giá và funding rate có ăn hết lợi thế không?
+5. Hiệu suất 40% Out-of-Sample có sụp đổ so với 60% In-Sample không?
+
+Kết thúc bằng đúng 1 từ: KEEP hoặc KILL kèm lý do quan trọng nhất.
+</code></pre>
+<hr />
+<h2 id="chuong-7-chay-bot-247-paper-testnet-vps-xu-ly-loi-thuong-gap-buoc-71-75">Chương 7: Chạy Bot 24/7 (Paper -&gt; Testnet -&gt; VPS) &amp; Xử Lý Lỗi Thường Gặp (Bước 7.1 → 7.5)</h2>
+<h3 id="buoc-71-tao-khung-bot-hoan-chinh-corebotpy">Bước 7.1: Tạo khung Bot hoàn chỉnh (<code>core/bot.py</code>)</h3>
+<pre><code class="language-python">&quot;&quot;&quot;Khung Bot chạy 24/7 — mặc định PAPER=True, đọc nến Mainnet thật, lưu state.json.&quot;&quot;&quot;
+import importlib, json, logging, os, sys, time
+from pathlib import Path
+import pandas as pd
+import yaml
+from dotenv import load_dotenv
+from core.data_loader import TF_SECONDS, create_exchange
+from core.risk import RiskConfig, RiskManager
+
+logging.basicConfig(level=logging.INFO, format=&quot;%(asctime)s [%(levelname)s] %(message)s&quot;)
+log = logging.getLogger(&quot;bot&quot;)
+
+
+class Bot:
+    def __init__(self, strategy, cfg):
+        self.s, self.cfg = strategy, cfg
+        self.paper = bool(cfg.get(&quot;paper&quot;, True))
+        self.testnet = bool(cfg.get(&quot;testnet&quot;, True))
+        self.risk = RiskManager(RiskConfig(**cfg.get(&quot;risk&quot;, {})))
+
+        # Paper mode đọc nến Mainnet thật (không gửi lệnh); chỉ bật sandbox khi đặt lệnh Testnet
+        use_sandbox = (not self.paper) and self.testnet
+        self.ex = create_exchange(
+            exchange_id=cfg.get(&quot;exchange&quot;, &quot;bybit&quot;),
+            testnet=use_sandbox,
+            api_key=None if self.paper else os.getenv(&quot;EXCHANGE_KEY&quot;),
+            secret=None if self.paper else os.getenv(&quot;EXCHANGE_SECRET&quot;),
+        )
+        self.paper_pos, self.paper_eq, self.last_px = {}, float(cfg.get(&quot;paper_equity&quot;, 10000.0)), {}
+        self.state_path = Path(&quot;state&quot;) / f&quot;{type(strategy).__module__.split('.')[-1]}_state.json&quot;
+        self.state_path.parent.mkdir(exist_ok=True)
+        if self.state_path.exists():
+            st = json.loads(self.state_path.read_text())
+            self.paper_pos, self.paper_eq, self.last_px = st[&quot;pos&quot;], st[&quot;eq&quot;], st[&quot;px&quot;]
+
+    def save_state(self):
+        self.state_path.write_text(json.dumps({&quot;pos&quot;: self.paper_pos, &quot;eq&quot;: self.paper_eq, &quot;px&quot;: self.last_px}, indent=2))
+
+    def candles(self, sym, limit):
+        raw = self.ex.fetch_ohlcv(sym, self.s.timeframe, limit=limit + 1)
+        df = pd.DataFrame(raw, columns=[&quot;ts&quot;, &quot;open&quot;, &quot;high&quot;, &quot;low&quot;, &quot;close&quot;, &quot;volume&quot;])
+        df[&quot;ts&quot;] = pd.to_datetime(df[&quot;ts&quot;], unit=&quot;ms&quot;, utc=True)
+        df = df.set_index(&quot;ts&quot;).iloc[:-1]  # Luôn bỏ nến chưa đóng
+        self.risk.check_data_freshness(df, self.s.timeframe, sym)
+        return df
+
+    def step(self):
+        data = {sym: self.candles(sym, self.s.history) for sym in self.s.symbols}
+        prices = {sym: float(df[&quot;close&quot;].iloc[-1]) for sym, df in data.items()}
+        if self.paper:
+            for sym, qty in self.paper_pos.items():
+                if sym in self.last_px:
+                    self.paper_eq += qty * (prices[sym] - self.last_px[sym])
+            self.last_px = dict(prices)
+            eq = self.paper_eq
+        else:
+            eq = float(self.ex.fetch_balance()[&quot;USDT&quot;][&quot;total&quot;])
+
+        if not self.risk.check_daily_loss(eq):
+            log.error(&quot;CHẠM GIỚI HẠN LỖ -3%/NGÀY -&gt; ĐÓNG SẠCH &amp; DỪNG BOT!&quot;)
+            return False
+
+        weights = self.risk.cap_leverage(self.s.target_weights(data))
+        log.info(&quot;equity=%.2f weights=%s&quot;, eq, {k: round(v, 4) for k, v in weights.items()})
+        for sym, w in weights.items():
+            cur = self.paper_pos.get(sym, 0.0) if self.paper else 0.0
+            delta = (w * eq / prices[sym]) - cur
+            if self.risk.should_trade(delta, prices[sym]):
+                if self.paper:
+                    self.paper_pos[sym] = cur + delta
+                    log.info(&quot;[PAPER] %s %.6f %s&quot;, &quot;BUY&quot; if delta &gt; 0 else &quot;SELL&quot;, abs(delta), sym)
+                else:
+                    amt = float(self.ex.amount_to_precision(sym, abs(delta)))
+                    if amt &gt; 0:
+                        self.ex.create_order(sym, &quot;market&quot;, &quot;buy&quot; if delta &gt; 0 else &quot;sell&quot;, amt)
+        self.save_state()
+        return True
+
+    def run(self, once=False):
+        while True:
+            try:
+                if not self.step() or once:
+                    break
+            except Exception as e:
+                log.exception(&quot;Lỗi vòng lặp (giữ nguyên vị thế): %s&quot;, e)
+                if once:
+                    raise
+            time.sleep(TF_SECONDS[self.s.timeframe])
+
+
+if __name__ == &quot;__main__&quot;:
+    load_dotenv()
+    cfg = yaml.safe_load(open(&quot;config/default.yaml&quot;))
+    name = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;statarb&quot;
+    Strat = importlib.import_module(f&quot;strategies.{name}&quot;).Strategy
+    Bot(Strat(), cfg).run(once=&quot;--once&quot; in sys.argv)
+</code></pre>
+<h3 id="buoc-72-chay-thu-paper-trading-1-vong">Bước 7.2: Chạy thử Paper Trading 1 vòng</h3>
+<pre><code class="language-bash">PYTHONPATH=. python core/bot.py statarb --once
+</code></pre>
+<ul>
+<li><strong>Checkpoint:</strong> Bạn sẽ thấy log in ra <code>equity=10000.00</code>, trọng số 10 đồng coin, các dòng <code>[PAPER] buy/sell ...</code> và file <code>state/statarb_state.json</code> được tạo tự động.</li>
+</ul>
+<h3 id="buoc-73-tao-api-key-testnet-an-toan">Bước 7.3: Tạo API Key Testnet an toàn</h3>
+<ol>
+<li>Đăng ký tài khoản giả lập tại <code>https://testnet.bybit.com</code> (hoặc <code>https://testnet.binancefuture.com</code>).</li>
+<li>Vào mục <strong>API Management</strong> -&gt; Tạo khóa mới -&gt; <strong>CHỈ BẬT quyền Trade (Contract/Derivatives)</strong>, <strong>TẮT quyền Withdraw (Rút tiền)</strong>, và điền IP máy/VPS vào Whitelist.</li>
+<li>Copy <code>.env.example</code> thành <code>.env</code>, dán <code>EXCHANGE_KEY</code> và <code>EXCHANGE_SECRET</code>.</li>
+<li>Trong <code>config/default.yaml</code>, đổi <code>paper: false</code> (vẫn giữ <code>testnet: true</code>) để kiểm tra khớp lệnh thật trên sàn Testnet trong 2–4 tuần.</li>
+</ol>
+<h3 id="buoc-74-treo-bot-247-tren-vps-linux-bang-systemd">Bước 7.4: Treo Bot 24/7 trên VPS Linux bằng <code>systemd</code></h3>
+<p>Tạo file <code>/etc/systemd/system/quant-bot.service</code> trên VPS Ubuntu (~<code>$5</code>/tháng):</p>
+<pre><code class="language-ini">[Unit]
+Description=Crypto Quant Bot 151
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/crypto-huy-opa
+Environment=&quot;PYTHONPATH=/home/ubuntu/crypto-huy-opa&quot;
+ExecStart=/home/ubuntu/crypto-huy-opa/.venv/bin/python core/bot.py statarb
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Kích hoạt &amp; theo dõi log trực tiếp:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable --now quant-bot
+journalctl -u quant-bot -f
+</code></pre>
+<h3 id="buoc-75-bang-xu-ly-6-loi-thuong-gap-nhat">Bước 7.5: Bảng xử lý 6 lỗi thường gặp nhất</h3>
+<table>
+<thead>
+<tr>
+<th>Lỗi gặp phải</th>
+<th>Nguyên nhân</th>
+<th>Cách khắc phục ngay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ModuleNotFoundError: No module named 'core'</code></td>
+<td>Thiếu đường dẫn gốc dự án</td>
+<td>Luôn thêm <code>PYTHONPATH=.</code> trước lệnh <code>python</code></td>
+</tr>
+<tr>
+<td><code>BadSymbol: bybit does not have ...</code></td>
+<td>Bật <code>sandbox_mode</code> của Testnet (ít cặp coin)</td>
+<td>Chế độ Paper phải đọc nến Mainnet (đã xử lý sẵn trong <code>bot.py</code>)</td>
+</tr>
+<tr>
+<td>Lỗi kết nối / chặn IP vùng</td>
+<td>Sàn chặn IP khu vực</td>
+<td>Đổi <code>exchange: okx</code> hoặc <code>binance</code> trong <code>config/default.yaml</code></td>
+</tr>
+<tr>
+<td><code>RuntimeError: data is ...s stale</code></td>
+<td>Rớt mạng hoặc sàn bảo trì</td>
+<td>Không tắt cảnh báo này — bot tự bỏ qua vòng lặp để bảo vệ vốn</td>
+</tr>
+<tr>
+<td><code>RateLimitExceeded</code></td>
+<td>Tải nhiều năm dữ liệu quá nhanh</td>
+<td>Đảm bảo có <code>enableRateLimit: True</code> và cache <code>.parquet</code></td>
+</tr>
+<tr>
+<td>Restart bot mất mốc lỗ ngày</td>
+<td>Không lưu trạng thái ra ổ cứng</td>
+<td>Đảm bảo thư mục <code>state/</code> có quyền ghi file <code>*.json</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="phu-luc-kho-26-chien-luoc-mo-rong-tu-sach-ang-test-tiep-tren-crypto">Phụ lục: Kho 26 Chiến lược Mở rộng từ Sách đáng Test tiếp trên Crypto</h2>
+<h3 id="kho-github-tong-hop-truc-tiep-tu-sach-151-trading-strategies">Kho GitHub tổng hợp trực tiếp từ sách <em>151 Trading Strategies</em></h3>
+<ul>
+<li><strong><a href="https://github.com/matimacazaga/strategist">matimacazaga/strategist</a></strong> — Cài đặt Python cho các chiến lược trong sách Kakushadze &amp; Serur.</li>
+<li><strong><a href="https://github.com/ThewindMom/151-trading-strategies">ThewindMom/151-trading-strategies</a></strong> — Cài đặt Python/FastAPI cho nhóm chiến lược non-options (cổ phiếu, ETF, FX, hàng hóa, crypto, macro).</li>
+<li><strong><a href="https://github.com/hemv-857/151-trading-strats">hemv-857/151-trading-strats</a></strong> — Terminal nghiên cứu định lượng &amp; backtest cho 151 chiến lược trên 18 lớp tài sản.</li>
+<li><strong><a href="https://github.com/KellanFinney/Trading_Strategy">KellanFinney/Trading_Strategy</a></strong> — Ứng dụng học &amp; trực quan hóa payoff cho các chiến lược từ sách.</li>
+</ul>
+<p>Khi đã nắm vững hệ thống ở Chương 1–7, hãy ưu tiên triển khai và đưa vào <strong>Alpha Combo</strong> các chiến lược đánh dấu ⭐ (có lợi thế cấu trúc rõ ràng trên Crypto). Toàn bộ 26 chiến lược kèm link GitHub mã nguồn mở tham khảo:</p>
+<h3 id="nhom-1-arbitrage-basis-chenh-lech-gia-lai-suat">Nhóm 1: Arbitrage &amp; Basis (Chênh lệch giá &amp; Lãi suất)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chiến lược (Mục sách)</th>
+<th>Ý tưởng áp dụng trên Crypto</th>
+<th>GitHub tham khảo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>⭐ <strong>Perp Funding Carry</strong> (8.2)</td>
+<td>Long Spot + Short Perp hưởng funding dương định kỳ</td>
+<td><a href="https://github.com/counterfactual5/funding-arb">counterfactual5/funding-arb</a> · <a href="https://github.com/TraderRebate-com/crypto-funding-rate-arbitrage">TraderRebate-com/crypto-funding-rate-arbitrage</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>⭐ <strong>Cash &amp; Carry</strong> (6.2)</td>
+<td>Long Spot + Short Quarterly Futures khi basis mở rộng</td>
+<td><a href="https://github.com/R1cK-ChaN/crypto-funding-arbitrage">R1cK-ChaN/crypto-funding-arbitrage</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Momentum + Carry</strong> (8.4)</td>
+<td>Kết hợp xu hướng + funding tối thiểu hóa phương sai</td>
+<td><a href="https://github.com/pst-group/pysystemtrade">pst-group/pysystemtrade</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Roll Yield</strong> (9.1)</td>
+<td>Khai thác đường cong futures (backwardation / contango)</td>
+<td><a href="https://github.com/pst-group/pysystemtrade">pst-group/pysystemtrade</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Calendar Spread</strong> (10.2)</td>
+<td>Long kỳ hạn gần, Short kỳ hạn xa (hoặc ngược lại)</td>
+<td><a href="https://github.com/pst-group/pysystemtrade">pst-group/pysystemtrade</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Two ETFs on One Index</strong> (6.4)</td>
+<td>Chênh lệch giá 1 coin giữa 2 sàn hoặc Spot vs Perp</td>
+<td><a href="https://github.com/counterfactual5/funding-arb">counterfactual5/funding-arb</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Triangular Arbitrage</strong> (8.5)</td>
+<td>Đổi vòng 3 cặp tiền (đòi hỏi tốc độ mili-giây)</td>
+<td><a href="https://github.com/nickmaglowsch/triangular-arbitrage-crypto">nickmaglowsch/triangular-arbitrage-crypto</a> · <a href="https://github.com/diobenu2silva/triangular_arbitrage_multi_exchange">diobenu2silva/triangular_arbitrage_multi_exchange</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nhom-2-trend-momentum-xu-huong-ong-luong">Nhóm 2: Trend &amp; Momentum (Xu hướng &amp; Động lượng)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chiến lược (Mục sách)</th>
+<th>Ý tưởng áp dụng trên Crypto</th>
+<th>GitHub tham khảo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>⭐ <strong>Dual Momentum</strong> (4.1.2)</td>
+<td>Chỉ mua nhóm coin mạnh nhất khi BTC đang xu hướng tăng</td>
+<td><a href="https://github.com/alexjansenhome/GEM">alexjansenhome/GEM</a> · <a href="https://github.com/Stockflicks/acc_dual">Stockflicks/acc_dual</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>⭐ <strong>Residual Momentum</strong> (3.7)</td>
+<td>Đo động lượng Altcoin sau khi trừ biến động BTC</td>
+<td><a href="https://github.com/ThewindMom/151-trading-strategies">ThewindMom/151-trading-strategies</a> · <a href="https://github.com/matimacazaga/strategist">matimacazaga/strategist</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Sector Rotation + MA</strong> (4.1.1)</td>
+<td>Xoay vòng giữa L1, DeFi, AI, Meme khi giá &gt; MA</td>
+<td><a href="https://github.com/haowoo0112/Dual-Momentum">haowoo0112/Dual-Momentum</a> · <a href="https://github.com/adamd1985/quant_research">adamd1985/quant_research</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Multi-Asset Trend</strong> (4.6)</td>
+<td>Danh mục xu hướng đa coin chia tỷ trọng nghịch đảo volatility</td>
+<td><a href="https://github.com/pst-group/pysystemtrade">pst-group/pysystemtrade</a> · <a href="https://github.com/robcarver17/pysystemtrade_examples">robcarver17/pysystemtrade_examples</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Donchian Channel</strong> (3.15)</td>
+<td>Đánh phá vỡ kênh giá cao/thấp nhất <em>N</em> ngày</td>
+<td><a href="https://github.com/joshuaebinisi/Donchian-Breakout-Strategy">joshuaebinisi/Donchian-Breakout-Strategy</a> · <a href="https://github.com/chrisgqy/crypto_trading_strategy">chrisgqy/crypto_trading_strategy</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Support &amp; Resistance</strong> (3.14)</td>
+<td>Mức Pivot từ High/Low/Close hôm qua</td>
+<td><a href="https://github.com/day0market/support_resistance">day0market/support_resistance</a> · <a href="https://github.com/ednunezg/pytrendline">ednunezg/pytrendline</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Multi-Factor Portfolio</strong> (3.6)</td>
+<td>Kết hợp nhiều nhân tố ít tương quan (kể cả On-chain)</td>
+<td><a href="https://github.com/blackms/FinRL-Adaptive">blackms/FinRL-Adaptive</a> · <a href="https://github.com/tanish35/Momentum-Investing">tanish35/Momentum-Investing</a> · <a href="https://github.com/jackalg42/multi-factor-equity-strategy">jackalg42/multi-factor-equity-strategy</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nhom-3-mean-reversion-ao-chieu-ve-trung-binh">Nhóm 3: Mean Reversion (Đảo chiều về trung bình)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chiến lược (Mục sách)</th>
+<th>Ý tưởng áp dụng trên Crypto</th>
+<th>GitHub tham khảo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td><strong>Cluster Reversion</strong> (3.9.1)</td>
+<td>Đảo chiều trong cùng nhóm ngành coin (phân cụm)</td>
+<td><a href="https://github.com/dharun4772/Pairs-Trading-Strategy">dharun4772/Pairs-Trading-Strategy</a> · <a href="https://github.com/fin-ml/Chapter-8---Unsup.-Learning---Clustering">fin-ml/Chapter-8---Unsup.-Learning---Clustering</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>Weighted Regression</strong> (3.10)</td>
+<td>Đảo chiều sau khi trừ các yếu tố rủi ro tùy chọn</td>
+<td><a href="https://github.com/KidQuant/Pairs-Trading-With-Python">KidQuant/Pairs-Trading-With-Python</a> · <a href="https://github.com/MeridianAlgo/Learn-Quant">MeridianAlgo/Learn-Quant</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>Contrarian + Activity Filter</strong> (10.3.1)</td>
+<td>Đảo chiều có lọc theo Volume &amp; Open Interest (OI)</td>
+<td><a href="https://github.com/Signalview/signalview-core">Signalview/signalview-core</a> · <a href="https://github.com/JiangZhihao123/llmalpha">JiangZhihao123/llmalpha</a> · <a href="https://github.com/BybitPythonTools/BybitPythonTools">BybitPythonTools/BybitPythonTools</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nhom-4-volatility-options-bien-ong-quyen-chon">Nhóm 4: Volatility &amp; Options (Biến động &amp; Quyền chọn)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chiến lược (Mục sách)</th>
+<th>Ý tưởng áp dụng trên Crypto</th>
+<th>GitHub tham khảo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18</td>
+<td>⭐ <strong>Volatility Targeting</strong> (6.5)</td>
+<td>Giữ tỷ trọng theo <code>Target Vol / Current Vol</code>, phần dư giữ tiền mặt (không cần Options)</td>
+<td><a href="https://github.com/pst-group/pysystemtrade">pst-group/pysystemtrade</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><strong>Skewness Premium</strong> (9.5)</td>
+<td>Tài sản lệch dương mạnh thường giảm lợi suất tương lai (không cần Options)</td>
+<td><a href="https://github.com/tanish35/Momentum-Investing">tanish35/Momentum-Investing</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><strong>Volatility Risk Premium</strong> (7.4)</td>
+<td>Bán biến động khi IV &gt; Realized Vol (Deribit)</td>
+<td><a href="https://github.com/tfrmma/options-volatility-trading-strats">tfrmma/options-volatility-trading-strats</a> · <a href="https://github.com/anthonymakarewicz/volatility-trading">anthonymakarewicz/volatility-trading</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Volatility Skew</strong> (7.5)</td>
+<td>Mua OTM Call, bán OTM Put khi Put đắt hơn Call (Deribit)</td>
+<td><a href="https://github.com/tfrmma/options-volatility-trading-strats">tfrmma/options-volatility-trading-strats</a> · <a href="https://github.com/deltaray-io">deltaray-io</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><strong>Dispersion Trading</strong> (6.3)</td>
+<td>Long vol thành phần, Short vol chỉ số (Deribit)</td>
+<td><a href="https://github.com/kurupjayesh/Dispersion-Trading-using-Options">kurupjayesh/Dispersion-Trading-using-Options</a> · <a href="https://github.com/tfrmma/options-volatility-trading-strats">tfrmma/options-volatility-trading-strats</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nhom-5-positioning-tin-tuc-thuc-thi">Nhóm 5: Positioning, Tin tức &amp; Thực thi</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chiến lược (Mục sách)</th>
+<th>Ý tưởng áp dụng trên Crypto</th>
+<th>GitHub tham khảo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>23</td>
+<td><strong>Announcement Days</strong> (19.5)</td>
+<td>Chỉ giữ BTC quanh ngày công bố tin vĩ mô (FOMC/CPI)</td>
+<td><a href="https://github.com/QuantConnect/Lean">QuantConnect/Lean</a> · <a href="https://github.com/ThewindMom/151-trading-strategies">ThewindMom/151-trading-strategies</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td><strong>Hedging Pressure</strong> (9.2)</td>
+<td>Theo dõi vị thế CFTC hàng tuần trên CME Bitcoin Futures</td>
+<td><a href="https://github.com/NDelventhal/cot_reports">NDelventhal/cot_reports</a> · <a href="https://github.com/Mcamin/cot-analysis">Mcamin/cot-analysis</a> · <a href="https://github.com/kustex/CFTC-COT-Report">kustex/CFTC-COT-Report</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Market Making</strong> (3.19)</td>
+<td>Đặt lệnh 2 đầu Bid/Ask (cần phí Maker âm/thấp)</td>
+<td><a href="https://github.com/hummingbot/hummingbot">hummingbot/hummingbot</a> · <a href="https://github.com/akshat-gosain/adaptive-crypto-market-maker">akshat-gosain/adaptive-crypto-market-maker</a> · <a href="https://github.com/mdibo/Avellaneda-Stoikov">mdibo/Avellaneda-Stoikov</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td><strong>Leveraged ETFs</strong> (4.5)</td>
+<td>Short đồng thời ETF đòn bẩy thuận &amp; nghịch ăn phí bào mòn</td>
+<td><a href="https://github.com/QuantConnect/Lean">QuantConnect/Lean</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="luu-y-khi-dung-github-ma-nguon-mo-luon-kiem-tra-lai-code-cua-cac-repo-cong-ong-qua-gate-1-look-ahead-va-gate-2-phi-funding-o-chuong-6-truoc-khi-ua-vao-chay-papertestnet">&gt; <strong>Lưu ý khi dùng GitHub mã nguồn mở:</strong> Luôn kiểm tra lại code của các repo cộng đồng qua <strong>Gate 1 (Look-ahead)</strong> và <strong>Gate 2 (Phí + Funding)</strong> ở Chương 6 trước khi đưa vào chạy Paper/Testnet.</h2>
+<p><em>Biên soạn bởi Tran Quang Huy (Huy OPA) — Kho mã nguồn chính thức: <code>https://github.com/lufyhyhy-opa/crypto-huy-opa</code>.</em></p>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll('pre').forEach((pre) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'code-wrap';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pre.innerText).then(() => {
+          btn.textContent = 'Đã copy!';
+          setTimeout(() => (btn.textContent = 'Copy'), 1500);
+        });
+      });
+      wrap.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
