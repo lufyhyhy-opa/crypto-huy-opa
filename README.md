@@ -36,7 +36,7 @@ Tài liệu trình bày chi tiết từng bước triển khai: kiến trúc ph�
 | **PDF chuẩn A4** | Đọc trực tiếp trên máy tính, điện thoại hoặc in ấn | [`docs/MASTER_PLAN_151_STRATEGIES_CRYPTO_BOT.pdf`](./docs/MASTER_PLAN_151_STRATEGIES_CRYPTO_BOT.pdf) |
 | **Web-Book HTML** | Đọc trên trình duyệt có mục lục điều hướng & nút sao chép mã nhanh | [`docs/MASTER_PLAN_151_STRATEGIES_CRYPTO_BOT.html`](./docs/MASTER_PLAN_151_STRATEGIES_CRYPTO_BOT.html) |
 | **Markdown (.md)** | Xem trực tiếp trên GitHub hoặc tích hợp vào Notion | [`docs/MASTER_PLAN_151_STRATEGIES_CRYPTO_BOT.md`](./docs/MASTER_PLAN_151_STRATEGIES_CRYPTO_BOT.md) |
-| **Google Drive trọn gói** | Tải toàn bộ tài liệu và gói mã nguồn nén (.zip) | [Mở thư mục Google Drive](https://drive.google.com/drive/folders/1vIGo7TBLtIsVUu8rGJjbCiCiSEs1May2) |
+| **Gói đầy đủ (.zip)** | Tải toàn bộ mã nguồn + tài liệu trong 1 chạm | Bấm **`<> Code` → `Download ZIP`** ở góc trên bên phải |
 
 ---
 
