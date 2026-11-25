@@ -1,0 +1,3 @@
+# Exclude documentation and generated web-book files from GitHub Languages stats
+*.html linguist-documentation
+docs/** linguist-documentation
